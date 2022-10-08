@@ -6,16 +6,18 @@ import { BrowserModule } from '@angular/platform-browser';
 
 import {FormsModule} from "@angular/forms";
 import {StudRegComponent} from "./stud-reg/stud-reg.component";
+import {LoginComponent} from "./login/login.component";
 
 
 const routes: Routes=[
- // {path:'list',component:MyBlog1Component},
- {path:'create',component:StudRegComponent}
+ // {path:'Teacher',component:MyBlog1Component},
+ {path:'Student',component:StudRegComponent},
+  {path:'Login',component:LoginComponent}
 ];
 
 @NgModule({
-  declarations: [StudRegComponent],
+  declarations: [StudRegComponent,LoginComponent],
   imports: [CommonModule, RouterModule.forRoot(routes), BrowserModule, FormsModule],
-  exports: [RouterModule,StudRegComponent ]
+  exports: [RouterModule,StudRegComponent,LoginComponent ]
 })
 export class AppRoutingModule { }

@@ -1,25 +1,24 @@
 <div class="container1">
   <h2 class="text-center mb-5">Login</h2>
-  <form class="form1 ">
+  <form class="form1 " #LoginData="ngForm"  (ngSubmit)="SubmitLogin(LoginData.value)" ngNativeValidate>
 
     <div class="form-outline mb-4">
-      <input type="text" id="StudentUserName" class="form-control" />
-      <label class="form-label" for="StudentUserName">UserName</label>
+      <input type="text" name="userName" class="form-control" [maxLength]="16" ngModel required/>
+      <label class="form-label" name="userName">UserName</label>
     </div>
 
 
     <div class="form-outline mb-4">
-      <input type="password" id="StudentPassword" class="form-control" />
-      <label class="form-label" for="StudentPassword">Password</label>
+      <input type="password" name="password" class="form-control" [minLength]="8" [maxLength]="16" ngModel required/>
+      <label class="form-label" name="password" >Password</label>
     </div>
 
 
 
 
 
-    <button type="button" class="btn btn-primary btn-block mb-4">Login</button>
-    <p class="text-center text-muted mt-5 mb-0">Not Registered? <a href="/Student"
-                                                                            class="fw-bold text-body"><u>Register here</u></a></p>
+    <button type="submit" class="btn btn-primary btn-block mb-4">Login</button>
+
 
   </form>
 </div>

@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import {NgForm} from "@angular/forms";
+import {HttpClient} from "@angular/common/http";
 
 @Component({
   selector: 'app-stud-reg',
@@ -10,13 +12,14 @@ export class StudRegComponent implements OnInit {
   StudentAge: string | undefined
   status: boolean | undefined;
 
-  constructor() { }
+
+  constructor(private http:HttpClient) { }
 
   ngOnInit(): void {
   }
  findAge()
   { // @ts-ignore
-    var birthDay = document.getElementById("StudentDOB").value;
+    var birthDay = document.getElementById("birthDate").value;
     var DOB = new Date(birthDay);
     var today = new Date();
     var age = today.getTime() - DOB.getTime();
@@ -42,4 +45,15 @@ export class StudRegComponent implements OnInit {
   }
 
 
-}
+  Submit(StudRegData: NgForm) {
+    console.log(StudRegData)
+    this.http.post('http://localhost:8080/student', StudRegData)
+      .subscribe((result) => {
+        console.warn("result", result)
+      })
+
+
+  }
+  }
+
+

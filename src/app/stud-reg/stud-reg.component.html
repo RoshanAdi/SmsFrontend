@@ -25,9 +25,9 @@
                 </div>
 
                 <div class="form-outline mb-4">
-                  <input type="text" name="name" class="form-control" [maxLength]="100" [minLength]="5" oninvalid="this.setCustomValidity('Enter Your Full name Here')"
+                  <input type="text" name="fullName" class="form-control" [maxLength]="100" [minLength]="5" oninvalid="this.setCustomValidity('Enter Your Full name Here')"
                          oninput="this.setCustomValidity('')" ngModel required/>
-                  <label class="form-label" name="name">Full Name</label>
+                  <label class="form-label" name="fullName">Full Name</label>
                 </div>
 
                 <div class="inline">
@@ -54,15 +54,15 @@
                 </div>
 
                 <div class="form-outline mb-4">
-                  <input type="email" name="email" class="form-control" [minLength]="7" maxlength="30" oninvalid="this.setCustomValidity('Enter a Valid Email Address')"
+                  <input type="email" name="username" class="form-control" [minLength]="7" maxlength="30" oninvalid="this.setCustomValidity('Enter a Valid Email Address')"
                          oninput="this.setCustomValidity('')" ngModel/>
-                  <label class="form-label" name="email">Your Email</label>
+                  <label class="form-label" name="username">Your Email</label>
                 </div>
 
                 <div class="form-outline mb-4">
-                  <input type="password" name="studentPassword" id="StudentPassword" class="form-control" placeholder="At least 8 digits long" maxlength="16" [minLength]="8" oninvalid="this.setCustomValidity('Your Password should have at lest 8 digits and not more than 16')"
+                  <input type="password" name="password" id="StudentPassword" class="form-control" placeholder="At least 8 digits long" maxlength="16" [minLength]="8" oninvalid="this.setCustomValidity('Your Password should have at lest 8 digits and not more than 16')"
                          oninput="this.setCustomValidity('')" ngModel required/>
-                  <label class="form-label" name="studentPassword">Password</label>
+                  <label class="form-label" name="password">Password</label>
                 </div>
 
                 <div class="form-outline mb-4">

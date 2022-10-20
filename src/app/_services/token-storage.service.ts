@@ -17,6 +17,7 @@ export class TokenStorageService {
   public saveToken(token: string): void {
     window.sessionStorage.removeItem(TOKEN_KEY);
     window.sessionStorage.setItem(TOKEN_KEY, token);
+
     //localStorage.setItem('TOKEN_KEY', token);
 
     const user = this.getUser();
@@ -26,6 +27,7 @@ export class TokenStorageService {
   }
 
   public getToken(): string | null {
+    console.log("Getting token for header = "+window.sessionStorage.getItem(TOKEN_KEY))
     return window.sessionStorage.getItem(TOKEN_KEY);
   }
 

@@ -9,7 +9,7 @@ import {AuthInterceptor, authInterceptorProviders} from "./_helpers/auth.interce
 @NgModule({
   declarations: [ AppComponent ],
   imports: [BrowserModule, AppRoutingModule,HttpClientModule, ],
-  providers: [authInterceptorProviders,{
+  providers: [{                    //authInterceptorProviders removed
     provide: HTTP_INTERCEPTORS,
     useClass: AuthInterceptor,
     multi: true,

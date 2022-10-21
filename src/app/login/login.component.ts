@@ -46,7 +46,7 @@ export class LoginComponent implements OnInit {
       );
   }
   redirect(){
-    this.router.navigate(['/myProfile']);
+    this.router.navigate(['/']);
   }
 
   }

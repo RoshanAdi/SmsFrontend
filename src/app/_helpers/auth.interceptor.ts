@@ -7,6 +7,8 @@ import { AuthService } from '../_services/auth.service';
 
 import { BehaviorSubject, Observable, throwError } from 'rxjs';
 import { catchError, filter, switchMap, take } from 'rxjs/operators';
+import {EventData} from "../_shared/event.class";
+import {EventBusService} from "../_shared/event-bus.service";
 
 const TOKEN_HEADER_KEY = 'Authorization';
 
@@ -15,7 +17,7 @@ export class AuthInterceptor implements HttpInterceptor {
   private isRefreshing = false;
   private refreshTokenSubject: BehaviorSubject<any> = new BehaviorSubject<any>(null);
 
-  constructor(private tokenService: TokenStorageService, private authService: AuthService) { }
+  constructor(private tokenService: TokenStorageService, private eventBusService: EventBusService) { }
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<Object>> {
     let authReq = req;
@@ -37,34 +39,13 @@ export class AuthInterceptor implements HttpInterceptor {
   private handle401Error(request: HttpRequest<any>, next: HttpHandler) {
     if (!this.isRefreshing) {
       this.isRefreshing = true;
-      this.refreshTokenSubject.next(null);
 
-      const token = this.tokenService.getRefreshToken();
-
-      if (token)
-        return this.authService.refreshToken(token).pipe(
-          switchMap((token: any) => {
-            this.isRefreshing = false;
-
-            this.tokenService.saveToken(token.accessToken);
-            this.refreshTokenSubject.next(token.accessToken);
-
-            return next.handle(this.addTokenHeader(request, token.accessToken));   //remove this addTokenHeader and replace with clone as done above
-          }),
-          catchError((err) => {
-            this.isRefreshing = false;
-
-            this.tokenService.signOut();
-            return throwError(err);
-          })
-        );
+      if (this.tokenService.isLoggedIn()) {
+        this.eventBusService.emit(new EventData('logout', null));
+      }
     }
+    return next.handle(request);
 
-    return this.refreshTokenSubject.pipe(
-      filter(token => token !== null),
-      take(1),
-      switchMap((token) => next.handle(this.addTokenHeader(request, token)))
-    );
   }
 
   private addTokenHeader(request: HttpRequest<any>, token: string) {

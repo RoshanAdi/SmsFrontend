@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import {NgForm} from "@angular/forms";
+import {TokenStorageService} from "./token-storage.service";
 
 const AUTH_API = 'http://localhost:8089/';
 
@@ -13,7 +14,7 @@ const httpOptions = {
   providedIn: 'root'
 })
 export class AuthService {
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, private  tokenStorageService: TokenStorageService) { }
 
   login(LoginData: string | NgForm): Observable<any> {
     console.log("email and pass = "+LoginData)
@@ -32,5 +33,17 @@ export class AuthService {
     return this.http.post(AUTH_API + 'refreshtoken', {
       refreshToken: token
     }, httpOptions);
+  }
+
+  logout(): Observable<any> {
+    return this.http.post(AUTH_API + 'signout', { }, httpOptions);
+  }
+
+  isLoggedIn() {
+
+    return this.tokenStorageService.getToken() == null;
+  }
+  isNotLoggedIn(){
+    return this.tokenStorageService.getToken() != null;
   }
 }

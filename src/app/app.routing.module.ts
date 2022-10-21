@@ -19,6 +19,8 @@ import {ProfileComponent} from "./profile/profile.component";
 
 
 
+
+
 const routes: Routes=[
  {path:'verify',component:SuccessNoticeComponent},
  {path:'Student',component:StudRegComponent},
@@ -28,6 +30,7 @@ const routes: Routes=[
   {path:'StudentDetails',component:StudentDetailsComponent},
   {path:'myProfile',component:ProfileComponent},
 
+
 ];
 
 @NgModule({
@@ -35,6 +38,6 @@ const routes: Routes=[
   imports: [CommonModule, RouterModule.forRoot(routes), BrowserModule, FormsModule,HttpClientModule,
     ReactiveFormsModule,],
 
-  exports: [RouterModule,StudRegComponent,LoginComponent,SuccessNoticeComponent,VerifiedNoticeComponent,FailedNoticeComponent,StudentDetailsComponent,ProfileComponent, ]
+  exports: [RouterModule,StudRegComponent,LoginComponent,SuccessNoticeComponent,VerifiedNoticeComponent,FailedNoticeComponent,StudentDetailsComponent,ProfileComponent,]
 })
 export class AppRoutingModule { }

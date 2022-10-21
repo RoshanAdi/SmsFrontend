@@ -59,4 +59,15 @@ export class TokenStorageService {
 
     return {};
   }
+  clean(): void {
+    window.sessionStorage.clear();
+  }
+  public isLoggedIn(): boolean {
+    const user = window.sessionStorage.getItem(USER_KEY);
+    if (user) {
+      return true;
+    }
+
+    return false;
+  }
 }

@@ -17,6 +17,14 @@ constructor( private http:HttpClient,private userNameService: UsernameService){}
   myObj:any
 name:any
   public firstname: String | undefined;
+  public fullName: String | undefined;
+  public lastName: String | undefined;
+  public username: String | undefined;
+  public age: String | undefined;
+  public birthDate: String | undefined;
+  public address: String | undefined;
+  public tp: String | undefined;
+
 
 
   ngOnInit(): void { console.log("printing the username found from token = "+this.userNameService.getUserName())
@@ -27,6 +35,13 @@ const username = this.userNameService.getUserName()
               this.name = JSON.stringify(response);
          this.myObj = JSON.parse(this.name);
          this.firstname = this.myObj.firstName
+        this.fullName = this.myObj.fullName
+        this.lastName = this.myObj.lastName
+        this.username = this.myObj.username
+        this.birthDate = this.myObj.birthDate
+        this.tp = this.myObj.tp
+        this.address = this.myObj.address
+        this.age = this.myObj.age
               console.log("Printing student = "+this.myObj.firstName)    });
 
 

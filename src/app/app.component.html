@@ -1,9 +1,16 @@
-<div>
+<div *ngIf="authService.isLoggedIn()">
 <ul class="nav nav-pills pull-right " >
   <li role="presentation" ><a routerLink="/Login">Login</a></li>
   <li role="presentation"><a routerLink="/Student">Student Registration</a></li>
   <li role="presentation"><a routerLink="/Teacher">Teacher Registration</a></li>
+<!--  <li role="presentation"><a routerLink="/StudentDetails">My Profile</a></li>
+  <button class="btn btn-outline-primary" (click)="logout()" >Logout</button>-->
 </ul>
 </div>
-
+<div *ngIf="authService.isNotLoggedIn()">
+  <ul class="nav nav-pills pull-right " >
+    <li role="presentation"><a routerLink="/StudentDetails">My Profile</a></li>
+    <button class="btn btn-outline-primary" (click)="logout()" >Logout</button>
+  </ul>
+</div>
 <router-outlet></router-outlet>

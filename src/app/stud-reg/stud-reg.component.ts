@@ -3,6 +3,7 @@ import {NgForm} from "@angular/forms";
 import {HttpClient} from "@angular/common/http";
 import { Router } from '@angular/router';
 
+
 @Component({
   selector: 'app-stud-reg',
   templateUrl: './stud-reg.component.html',
@@ -14,7 +15,7 @@ export class StudRegComponent implements OnInit {
   status: boolean | undefined;
 
 
-  constructor(private http:HttpClient,private router: Router) { }
+  constructor(private http:HttpClient,private router: Router, ) { }
 
   ngOnInit(): void {
   }
@@ -48,7 +49,7 @@ export class StudRegComponent implements OnInit {
 
   Submit(StudRegData: NgForm) {
     console.log(StudRegData)                                            /// delete
-    this.http.post('http://localhost:8080/student', StudRegData)
+    this.http.post('http://localhost:8089/student/register', StudRegData)
       .subscribe((result) => {
         console.warn("result", result)                ////remove
       })

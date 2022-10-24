@@ -9,10 +9,16 @@ import { BrowserModule } from '@angular/platform-browser';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms'
 import {StudRegComponent} from "./stud-reg/stud-reg.component";
 import {LoginComponent} from "./login/login.component";
-import {HttpClientModule} from "@angular/common/http";
+import {HTTP_INTERCEPTORS, HttpClientModule} from "@angular/common/http";
 import { SuccessNoticeComponent } from './success-notice/success-notice.component';
 import { VerifiedNoticeComponent } from './verified-notice/verified-notice.component';
 import { FailedNoticeComponent } from './failed-notice/failed-notice.component';
+import {StudentDetailsComponent} from "./student-details/student-details.component";
+import {AuthInterceptor} from "./_helpers/auth.interceptor";
+import {ProfileComponent} from "./profile/profile.component";
+
+
+
 
 
 const routes: Routes=[
@@ -21,13 +27,17 @@ const routes: Routes=[
   {path:'Login',component:LoginComponent},
   {path:'regSuccess',component:VerifiedNoticeComponent},
   {path:'regFail',component:FailedNoticeComponent},
+  {path:'StudentDetails',component:StudentDetailsComponent},
+  {path:'myProfile',component:ProfileComponent},
+
 
 ];
 
 @NgModule({
-  declarations: [StudRegComponent,LoginComponent, SuccessNoticeComponent, VerifiedNoticeComponent,FailedNoticeComponent,],
+  declarations: [StudRegComponent,LoginComponent, SuccessNoticeComponent, VerifiedNoticeComponent,FailedNoticeComponent,StudentDetailsComponent,ProfileComponent,],
   imports: [CommonModule, RouterModule.forRoot(routes), BrowserModule, FormsModule,HttpClientModule,
     ReactiveFormsModule,],
-  exports: [RouterModule,StudRegComponent,LoginComponent,SuccessNoticeComponent,VerifiedNoticeComponent,FailedNoticeComponent, ]
+
+  exports: [RouterModule,StudRegComponent,LoginComponent,SuccessNoticeComponent,VerifiedNoticeComponent,FailedNoticeComponent,StudentDetailsComponent,ProfileComponent,]
 })
 export class AppRoutingModule { }

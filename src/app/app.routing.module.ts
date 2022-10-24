@@ -15,7 +15,8 @@ import { VerifiedNoticeComponent } from './verified-notice/verified-notice.compo
 import { FailedNoticeComponent } from './failed-notice/failed-notice.component';
 import {StudentDetailsComponent} from "./student-details/student-details.component";
 import {AuthInterceptor} from "./_helpers/auth.interceptor";
-import {ProfileComponent} from "./profile/profile.component";
+import {TeacherRegistrationComponent} from "./teacher-registration/teacher-registration.component";
+
 
 
 
@@ -28,16 +29,17 @@ const routes: Routes=[
   {path:'regSuccess',component:VerifiedNoticeComponent},
   {path:'regFail',component:FailedNoticeComponent},
   {path:'StudentDetails',component:StudentDetailsComponent},
-  {path:'myProfile',component:ProfileComponent},
+  {path:'Teacher',component:TeacherRegistrationComponent},
+
 
 
 ];
 
 @NgModule({
-  declarations: [StudRegComponent,LoginComponent, SuccessNoticeComponent, VerifiedNoticeComponent,FailedNoticeComponent,StudentDetailsComponent,ProfileComponent,],
+  declarations: [StudRegComponent,LoginComponent, SuccessNoticeComponent, VerifiedNoticeComponent,FailedNoticeComponent,StudentDetailsComponent,TeacherRegistrationComponent,],
   imports: [CommonModule, RouterModule.forRoot(routes), BrowserModule, FormsModule,HttpClientModule,
     ReactiveFormsModule,],
 
-  exports: [RouterModule,StudRegComponent,LoginComponent,SuccessNoticeComponent,VerifiedNoticeComponent,FailedNoticeComponent,StudentDetailsComponent,ProfileComponent,]
+  exports: [RouterModule,StudRegComponent,LoginComponent,SuccessNoticeComponent,VerifiedNoticeComponent,FailedNoticeComponent,StudentDetailsComponent,TeacherRegistrationComponent,]
 })
 export class AppRoutingModule { }

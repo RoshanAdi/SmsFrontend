@@ -4,6 +4,9 @@ import {AuthService} from "../_services/auth.service";
 import {UsernameService} from "../_services/username.service";
 import {Observable} from "rxjs";
 import {map} from "rxjs/operators";
+import {Router} from "@angular/router";
+import {NgForm} from "@angular/forms";
+
 
 @Component({
   selector: 'app-student-details',
@@ -13,10 +16,10 @@ import {map} from "rxjs/operators";
 export class StudentDetailsComponent implements OnInit {
 
 
-constructor( private http:HttpClient,private userNameService: UsernameService){}
+constructor( private http:HttpClient,private userNameService: UsernameService, private router: Router,){}
   myObj:any
 name:any
-  public firstname: String | undefined;
+  public firstName: String | undefined;
   public fullName: String | undefined;
   public lastName: String | undefined;
   public username: String | undefined;
@@ -24,6 +27,9 @@ name:any
   public birthDate: String | undefined;
   public address: String | undefined;
   public tp: String | undefined;
+  public  ShowInputFields = false
+  public  HideDetails = true
+
 
 
 
@@ -34,7 +40,7 @@ const username = this.userNameService.getUserName()
       .subscribe(response=> {
               this.name = JSON.stringify(response);
          this.myObj = JSON.parse(this.name);
-         this.firstname = this.myObj.firstName
+         this.firstName = this.myObj.firstName
         this.fullName = this.myObj.fullName
         this.lastName = this.myObj.lastName
         this.username = this.myObj.username
@@ -49,6 +55,23 @@ const username = this.userNameService.getUserName()
 
   }
 
+  LoadEdit(){
+    this.ShowInputFields = true;
+    this.HideDetails = false;
+  }
+  Update(UpdateData: NgForm) {
+    //console.log("Modified = "+UpdateData.firstName)
+    this.http.put('http://localhost:8089/student/'+this.username, UpdateData)
+
+  .subscribe((result) => {
+    console.warn("result", result)                ////remove
+  })
 
 
+
+
+      //console.log('http://localhost:8089/student/'+this.username)
+    window.location.reload();
+
+  }
 }

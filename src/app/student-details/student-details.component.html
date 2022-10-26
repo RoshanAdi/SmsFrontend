@@ -18,7 +18,7 @@
               <img src="https://bootdey.com/img/Content/avatar/avatar7.png" alt="Admin" class="rounded-circle" width="150">
               <div class="mt-3">
                 <h4>{{firstName}}</h4>
-                <p class="text-secondary mb-1">Student</p>
+                <p class="text-secondary mb-1">{{role}}</p>
 
                 <button class="btn btn-primary">Follow</button>
                 <button class="btn btn-outline-primary">Message</button>
@@ -84,8 +84,8 @@
               </div>
                 <input class="col-sm-9 text-secondary" *ngIf="ShowInputFields" name = "fullName" ngModel="{{fullName}}" required>
               </div>
-            <hr>
-            <div class="row">
+            <hr *ngIf="StudentUser">
+            <div class="row" *ngIf="StudentUser">
               <div class="col-sm-3">
                 <h6 class="mb-0">Birth Date</h6>
               </div>
@@ -93,8 +93,8 @@
                 {{birthDate}}
               </div>
             </div>
-            <hr>
-            <div class="row">
+            <hr *ngIf="StudentUser">
+            <div class="row" *ngIf="StudentUser">
               <div class="col-sm-3">
                   <h6 class="mb-0">Age</h6>
                 </div>
@@ -102,7 +102,19 @@
                   {{age}}
                 </div>
               </div>
-              <hr>
+              <hr  *ngIf="TeacherUser">
+
+            <div class="row" *ngIf="TeacherUser">
+              <div class="col-sm-3">
+                <h6 class="mb-0">NIC</h6>
+              </div>
+              <div class="col-sm-9 text-secondary" *ngIf="HideDetails">
+{{nIc}}
+              </div>
+              <input class="col-sm-9 text-secondary" *ngIf="ShowInputFields" name = "nIc" ngModel="{{nIc}}"  required>
+
+            </div>
+            <hr>
               <div class="row">
                 <div class="col-sm-3">
                       <h6 class="mb-0">Address</h6>

@@ -1,0 +1,73 @@
+<div style="padding-top: 35px"></div>
+<div style="padding-left: 20px;padding-right: 20px" >
+<div><a href="Subjects/create" class="btn btn-primary" *ngIf="showSubjectList">Create a new subject</a></div>
+<div><button (click)="reload()" class="btn btn-primary" *ngIf="showSelectedSubject">Select a different subject</button></div>
+
+  <div *ngIf="showSubjectList">
+
+<div class="card col-md-4"  *ngFor="let obj of myObj">
+  <div class="card-body">
+    <h5 class="card-title">{{obj.subjectName}} </h5>
+    <p class="card-text">{{obj.description}}.</p>
+    <p class="card-text">{{obj.subjectId}}</p>
+    <a (click)="load(obj.subjectId)" class="btn btn-primary stretched-link">Manage</a>
+  </div>
+</div>
+</div>
+
+<div *ngIf="showSelectedSubject">
+  <form #updateSub="ngForm" (ngSubmit)="editSub(updateSub.value)">
+ <div *ngIf="!showUpdateInputField"> <h2 class="d-inline">{{myObj1.subjectName}} </h2> <button  (click)="showInputFields()">edit</button>
+   <h4>{{myObj1.description}}</h4></div>
+    <div  *ngIf="showUpdateInputField">
+      <input style="font-size:25px; width: 100%" type="text" name = "subjectName" ngModel="{{myObj1.subjectName}}" ><br>
+    <textarea rows="4" style="width: 100%; font-size: 15px"  name = "description" ngModel="{{myObj1.description}}" ></textarea><button type="submit" >Update</button>
+    </div>  </form>
+
+  <form #editAssig="ngForm" (ngSubmit)="editAssi(editAssig.value)">
+  <div *ngFor="let obj0 of myObj1.assigmentList ">
+    <div *ngIf="!showUpdateAssignmentFields">
+    <h3 class="d-inline">{{obj0.assigmentTitle}}</h3><button  (click)="showUpdateFieldsAssi(obj0.assigmentID)">edit</button>
+    <h5>{{obj0.assigmentDiscription}}</h5>
+    <p>{{obj0.assigmentData}}</p></div>  </div>
+    <div *ngIf="showUpdateAssignmentFields">
+      <div *ngFor="let obj00 of myObj1.assigmentList">
+        <div *ngIf="obj00.assigmentID == currentAssignmentId">
+          <input style="font-size:25px; width: 100%" type="text" name = "assigmentTitle" ngModel="{{obj00.assigmentTitle}}" ><br>
+          <textarea rows="4" style="width: 100%; font-size: 15px"  name = "assigmentDiscription" ngModel="{{obj00.assigmentDiscription}}" ></textarea>
+          <textarea rows="4" style="width: 100%; font-size: 15px"  name = "assigmentData" ngModel="{{obj00.assigmentData}}" ></textarea><button type="submit" >Update</button>
+
+        </div>
+      </div>
+
+    </div>
+
+  </form>
+</div>
+
+  <div  (click)="loadCreateAssi()" class="btn btn-primary" *ngIf="showAddAssignmentButton">Add a new assignment</div>
+  <div style="padding: 10px; width: 40%" *ngIf="showCreateAssign">
+    <form #CreateAssi="ngForm"  (ngSubmit)="Submit(CreateAssi.value)" >
+      <!-- Number input -->
+      <div class="form-outline mb-2">
+        <input type="text" id="form6Example6" name="assigmentTitle" class="form-control" ngModel/>
+        <label class="form-label" for="form6Example6">Assignment Title</label>
+      </div>
+
+      <!-- Message input -->
+      <div class="form-outline mb-2">
+        <textarea class="form-control" id="form6Example7" name="assigmentDiscription" rows="4" ngModel></textarea>
+        <label class="form-label" for="form6Example7">Description</label>
+      </div>
+      <div class="form-outline mb-2">
+        <textarea class="form-control" id="form6Example8" name="assigmentData" rows="4" ngModel></textarea>
+        <label class="form-label" for="form6Example7">Body</label>
+      </div>
+
+      <!-- Submit button -->
+      <button type="submit" class="btn btn-primary btn-block mb-4">Create</button>
+    </form>
+  </div>
+
+</div>
+

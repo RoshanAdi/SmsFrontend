@@ -14,8 +14,6 @@ export class AppComponent implements OnInit, OnDestroy{
   title = 'SmsFrontend';
   private roles: string[] = [];
   isLoggedIn = false;
-  showAdminBoard = false;
-  showModeratorBoard = false;
   username?: string;
 
   eventBusSub?: Subscription;

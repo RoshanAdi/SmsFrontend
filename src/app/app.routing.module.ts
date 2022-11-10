@@ -18,9 +18,9 @@ import {AuthInterceptor} from "./_helpers/auth.interceptor";
 import {TeacherRegistrationComponent} from "./teacher-registration/teacher-registration.component";
 import {CreateSubjectComponent} from "./CreateSubject/create-subject.component";
 import {SubjectsComponent} from "./subjects/subjects.component";
-import {MCQCreateComponent} from "./mcqcreate/mcqcreate.component";
 import {FileUploadModule} from "ng2-file-upload";
 import {NgxWebstorageModule} from "ngx-webstorage";
+import {FileUploadComponent} from "./file-upload/file-upload.component";
 
 
 
@@ -44,10 +44,10 @@ const routes: Routes=[
 ];
 
 @NgModule({
-  declarations: [StudRegComponent,LoginComponent, SuccessNoticeComponent, VerifiedNoticeComponent,FailedNoticeComponent,StudentDetailsComponent,TeacherRegistrationComponent,CreateSubjectComponent,SubjectsComponent,MCQCreateComponent],
+  declarations: [StudRegComponent,LoginComponent, SuccessNoticeComponent, VerifiedNoticeComponent,FailedNoticeComponent,StudentDetailsComponent,TeacherRegistrationComponent,CreateSubjectComponent,SubjectsComponent,FileUploadComponent],
   imports: [CommonModule, RouterModule.forRoot(routes), BrowserModule, FormsModule,HttpClientModule,
     ReactiveFormsModule,FileUploadModule,NgxWebstorageModule.forRoot(),],
 
-  exports: [RouterModule,StudRegComponent,LoginComponent,SuccessNoticeComponent,VerifiedNoticeComponent,FailedNoticeComponent,StudentDetailsComponent,TeacherRegistrationComponent,CreateSubjectComponent,SubjectsComponent,MCQCreateComponent]
+  exports: [RouterModule,StudRegComponent,LoginComponent,SuccessNoticeComponent,VerifiedNoticeComponent,FailedNoticeComponent,StudentDetailsComponent,TeacherRegistrationComponent,CreateSubjectComponent,SubjectsComponent,FileUploadComponent]
 })
 export class AppRoutingModule { }

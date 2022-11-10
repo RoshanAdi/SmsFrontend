@@ -37,24 +37,29 @@ public AssignmentIdForMcq:number=0;
   @Input()
   requiredFileType: string | undefined;
   public showFileUploadField:boolean = false;
-  public savedFiles:any[]=[];
-  public fileDBList:any[]=[];
+  public blob:any;
+  public formData = new FormData();
+  ReqJson: any = {};
+
+
+
+public fileDBList:any[]=[]
+  public savedFiles:any[]=[]
 
 
 
 
 
 
-
-
-
-  constructor(private http:HttpClient, private token:TokenStorageService,private localSt:LocalStorageService) {
+  constructor(private http:HttpClient) {
 
   }
 
-  uploader:
+  /*uploader:
     FileUploader = new FileUploader(
-    { url: "http://localhost:8089/upload/"+localStorage.getItem("assiId"), authToken:"Bearer "+this.token.getToken(),additionalParameter: this.token, removeAfterUpload: true,  disableMultipart: false});
+    { url: "http://localhost:8089/files/upload/"+this.getAssiId(), authToken:"Bearer "+this.token.getToken(),additionalParameter: this.token, removeAfterUpload: true,  disableMultipart: false});
+*/
+
 
 
   ngOnInit(): void {
@@ -65,12 +70,13 @@ public AssignmentIdForMcq:number=0;
         this.myObj = JSON.parse(this.name);
 
 
+
       })
     this.showSubjectList = true;
     this.showSelectedSubject = false;
 
 
-    localStorage.removeItem("assiId")
+
 
 
   }
@@ -87,6 +93,7 @@ load(id: any){
   this.showSelectedSubject = true;
   this.subjectId = id;
   this.showAddAssignmentButton = true;
+
 
 
 
@@ -155,6 +162,7 @@ load(id: any){
     window.location.reload();
   }
   showUpdateFieldsAssi(currentId:number){
+
     this.showUpdateAssignmentFields = true;
     this.currentAssignmentId = currentId;
     this.showAddAssignmentButton = false;
@@ -167,8 +175,7 @@ load(id: any){
 
       })
     this.showSavedMcq= true;
-    localStorage.setItem("assiId",String((this.currentAssignmentId)))  //taking assi id for file uploading.
-
+    localStorage.setItem("AssiId", String(this.currentAssignmentId))
   }
   showMcq(id:number){
     this.showMcqCreate = true
@@ -190,7 +197,7 @@ load(id: any){
     this.immediateMcq = Object.entries(value)
     this.saveMcqLoad()
     value.reset()
-    console.warn(window.sessionStorage.getItem("AssiId"))
+
 
   }
 
@@ -231,16 +238,33 @@ return this.mcqList;
   showFileUploadFields(){
     this.showFileUploadField = true;
   }
+/*
   ShowUploadedFiles(){
     this.http
-      .get("http://localhost:8089/Assignment/"+this.currentAssignmentId,{ responseType: 'blob', observe: 'response' })
-      .subscribe(response=> {
-        this.savedFiles = JSON.parse(JSON.stringify(response)).fileDBList;
-        console.warn(typeof (response))
-        console.warn(typeof (this.savedFiles))
-        console.warn(this.savedFiles)
-      })
+      .get("http://localhost:8089/Assignment/"+this.currentAssignmentId)
+      .subscribe((data) => {
+        this.savedFiles = JSON.parse(JSON.stringify(data)).fileDBList;
+      });
+
   }
+  downloadFile(id:string,fileName:string,fileType:string){
+    this.http
+      .get<Blob>("http://localhost:8089/files/download/"+id,{responseType: 'blob' as 'json'})
+      .subscribe((data) => {
+
+        this.blob = new Blob([data], {type: fileType});
+
+        var downloadURL = window.URL.createObjectURL(data);
+        var link = document.createElement('a');
+        link.href = downloadURL;
+        link.download = fileName;
+        link.click();
+
+      });
+  }
+
+*/
+
 
 }
 

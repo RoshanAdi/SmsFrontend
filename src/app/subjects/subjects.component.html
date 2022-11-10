@@ -40,7 +40,7 @@
     <div *ngIf="showUpdateAssignmentFields">
       <div *ngFor="let obj00 of myObj1.assigmentList">
         <div *ngIf="obj00.assigmentID == currentAssignmentId">
-          <input style="font-size:25px; width: 100%" type="text" name = "assigmentTitle" ngModel="{{obj00.assigmentTitle}}" ><br>
+             <input style="font-size:25px; width: 100%" type="text" name = "assigmentTitle" ngModel="{{obj00.assigmentTitle}}" ><br>
           <textarea rows="4" style="width: 100%; font-size: 15px"  name = "assigmentDiscription" ngModel="{{obj00.assigmentDiscription}}" ></textarea>
           <textarea rows="4" style="width: 100%; font-size: 15px"  name = "assigmentData" ngModel="{{obj00.assigmentData}}" ></textarea>
 
@@ -52,6 +52,7 @@
     </div>
 
   </form>
+
 </div>
   <div *ngIf="showUpdateAssignmentFields">
   <button  (click)="showMcq(currentAssignmentId)" *ngIf="!showMcqCreate" >Add Mcq Questions</button>
@@ -115,7 +116,7 @@
 
   </div>
 
-
+<!--
   <div class="container mt-5 mb-5" *ngIf="showFileUploadField">
     <div class="row">
       <div class="col-md-12">
@@ -170,8 +171,17 @@
     <div class="progress" style="">
       <div class="progress-bar" role="progressbar" [ngStyle]="{ 'width': uploader.progress + '%' }"></div>
     </div>
-    <button (click)="ShowUploadedFiles()"></button>
-  </div>
+  </div>-->
+<!--    <div *ngIf="uploader.progress ===100?ShowUploadedFiles():false"></div>-->
+<!--    <button (click)="ShowUploadedFiles()"></button>
+    <div *ngFor="let file of savedFiles">
+     <div > <h6>{{file.name}}</h6><p>  {{file.type}}</p></div><div ><button  (click)="downloadFile(file.id,file.name,file.type)"> Download </button></div>
+
+    </div>-->
+
+<div *ngIf="showFileUploadField">
+
+  <app-file-upload></app-file-upload></div>
 
 </div>
 

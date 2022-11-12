@@ -10,7 +10,7 @@
     <h5 class="card-title">{{obj.subjectName}} </h5>
     <p class="card-text">{{obj.description}}.</p>
     <p class="card-text">{{obj.subjectId}}</p>
-    <a (click)="load(obj.subjectId)" class="btn btn-primary stretched-link">Manage</a>
+    <a (click)="loadSubject(obj.subjectId)" class="btn btn-primary stretched-link">Manage</a>
 
   </div>
 </div>
@@ -27,8 +27,9 @@
     </div>  </form>
 
   <form #editAssig="ngForm" (ngSubmit)="editAssi(editAssig.value)">
-  <div *ngFor="let obj0 of myObj1.assigmentList ">
     <div *ngIf="!showUpdateAssignmentFields">
+    <div *ngFor="let obj0 of myObj1.assigmentList ">
+
     <h3 class="d-inline">{{obj0.assigmentTitle}}</h3><button  (click)="showUpdateFieldsAssi(obj0.assigmentID)">Manage</button><button  (click)="deleteAssi(obj0.assigmentID)">Delete</button>
     <h5>{{obj0.assigmentDiscription}}</h5>
     <p>{{obj0.assigmentData}}</p>
@@ -38,13 +39,20 @@
     </div> </div>
 
     <div *ngIf="showUpdateAssignmentFields">
+      <button *ngIf="!ShowAssiUpdateFields" style="position: center" (click)="showAssiUpdateFields()"  >Edit</button>
       <div *ngFor="let obj00 of myObj1.assigmentList">
         <div *ngIf="obj00.assigmentID == currentAssignmentId">
-             <input style="font-size:25px; width: 100%" type="text" name = "assigmentTitle" ngModel="{{obj00.assigmentTitle}}" ><br>
+         <div *ngIf="ShowAssiUpdateFields" >   <input style="font-size:25px; width: 100%" type="text" name = "assigmentTitle" ngModel="{{obj00.assigmentTitle}}" ><br>
           <textarea rows="4" style="width: 100%; font-size: 15px"  name = "assigmentDiscription" ngModel="{{obj00.assigmentDiscription}}" ></textarea>
           <textarea rows="4" style="width: 100%; font-size: 15px"  name = "assigmentData" ngModel="{{obj00.assigmentData}}" ></textarea>
+         </div>
+          <div *ngIf="!ShowAssiUpdateFields">
+            <h2>{{obj00.assigmentTitle}}</h2>
+            <h5>{{obj00.assigmentDiscription}}</h5>
+            <p>{{obj00.assigmentData}}</p>
+          </div>
+          <button type="submit" *ngIf="ShowAssiUpdateFields"  >Update</button>
 
-          <button type="submit" *ngIf="!showMcqCreate"  >Update</button>
 
         </div>
       </div>
@@ -55,133 +63,15 @@
 
 </div>
   <div *ngIf="showUpdateAssignmentFields">
-  <button  (click)="showMcq(currentAssignmentId)" *ngIf="!showMcqCreate" >Add Mcq Questions</button>
-    <button   *ngIf="!showMcqCreate" (click)="showFileUploadFields()" >Add file</button>
+  <button  (click)="showMcq(currentAssignmentId)"  >Add Mcq Questions</button>
+    <button   (click)="showFileUploadFields()" >Add file</button>
 </div>
+
   <div *ngIf="!showMcqCreate" > <div  (click)="loadCreateAssi()" class="btn btn-primary" *ngIf="showAddAssignmentButton">Add a new assignment</div></div>
-  <div style="padding: 10px" *ngIf="showCreateAssign">
-    <form #CreateAssi="ngForm"  (ngSubmit)="Submit(CreateAssi.value)" >
-      <!-- Number input -->
-      <div class="form-outline mb-2">
-        <input style=" font-size: 25px" type="text" id="form6Example6" name="assigmentTitle" class="form-control" ngModel/>
-        <label class="form-label" for="form6Example6">Assignment Title</label>
-      </div>
+  <div style="padding: 10px" *ngIf="showCreateAssign">    <app-create-assingement></app-create-assingement>  </div>
+<div *ngIf="showMcqCreate">  <app-mcq></app-mcq></div>
 
-      <!-- Message input -->
-      <div class="form-outline mb-2">
-        <textarea style=" font-size: 20px" class="form-control" id="form6Example7" name="assigmentDiscription" rows="3" ngModel></textarea>
-        <label class="form-label" for="form6Example7">Description</label>
-      </div>
-      <div class="form-outline mb-2">
-        <textarea  style=" font-size: 15px" class="form-control" id="form6Example8" name="assigmentData" rows="6" ngModel></textarea>
-        <label class="form-label" for="form6Example7">Body</label>
-      </div>
-
-      <!-- Submit button -->
-      <button style="width: auto" type="submit" class="btn btn-primary btn-block mb-4">Create</button>
-
-<!--      <app-mcqcreate></app-mcqcreate>-->
-    </form>
-  </div>
-<div *ngIf="showMcqCreate">
-  <form #updateSub="ngForm" (ngSubmit)="submitMcq(updateSub)">
-    <legend>MCQ Question:</legend>
-    <label style="padding: 4px; padding-right: 10px" > Question :  </label>
-    <textarea  type="text"  name="question" rows="1" style="width: 50% "   ngModel></textarea>
-    <div *ngFor=" let choice of Choices ; index as i">
-      <label style="padding: 4px; padding-right: 10px" > {{choice}} :  </label>
-
-      <textarea  type="text"  name="{{choice}}" rows="1" style="width: 50% "   ngModel></textarea>
-      <input type="checkbox" name="ans{{i+1}}" class="rdCheck"  ngModel/> Correct Answer
-    </div>
-    <button class="btn-add" type="button" (click)="addNewChoice()">Add new choice</button>
-    <br><br>
-    <button class="btn-submit" type="submit">Save</button>
-    <button class="btn-reset" type="button" (click)="reset(updateSub)">Reset</button>
-  </form>
-</div>
-
-  <div *ngFor="let mcq of mcqList; index as i">
-    <div *ngIf="mcq.choice1"><h4 class="d-inline">Question {{i+1}} </h4> <button class="btn-sm-sm" type="button" (click)="DeleteMcq(mcq.id)">Remove</button></div>
-    <legend></legend>
-    <h3 *ngIf="mcq.choice1"> Question : {{mcq.question}}</h3>
-    <h5 *ngIf="mcq.choice1"> Choice 1 : {{mcq.choice1}}<span *ngIf="mcq.ans1" class="glyphicon glyphicon-ok"></span></h5>
-    <h5 *ngIf="mcq.choice2"> Choice 2 : {{mcq.choice2}}<span *ngIf="mcq.ans2" class="glyphicon glyphicon-ok"></span></h5>
-    <h5 *ngIf="mcq.choice3"> Choice 3 : {{mcq.choice3}}<span *ngIf="mcq.ans3" class="glyphicon glyphicon-ok"></span></h5>
-    <h5 *ngIf="mcq.choice4"> Choice 4 : {{mcq.choice4}}<span *ngIf="mcq.ans4" class="glyphicon glyphicon-ok"></span></h5>
-    <h5 *ngIf="mcq.choice5"> Choice 5 : {{mcq.choice5}}<span *ngIf="mcq.ans5" class="glyphicon glyphicon-ok"></span></h5>
-    <h5 *ngIf="mcq.choice6"> Choice 6 : {{mcq.choice6}}<span *ngIf="mcq.ans6" class="glyphicon glyphicon-ok"></span></h5>
-    <legend></legend>
-    <div style="padding-bottom: 6px"></div>
-
-  </div>
-
-<!--
-  <div class="container mt-5 mb-5" *ngIf="showFileUploadField">
-    <div class="row">
-      <div class="col-md-12">
-        <div class="form-group">
-          <div class="row">
-            <label class="col-sm-3 col-form-label" >Documents</label>
-            <div class="col-sm-9">
-						<span class="hidden-file">
-              <input type="file" #fileInput name="file" ng2FileSelect [uploader]="uploader"  />
-            </span>
-
-
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="col-md-9 mt-5">
-
-
-        <table class="table">
-          <thead>
-          <tr>
-            <th>Name</th>
-            <th>Size</th>
-            <th>Actions</th>
-          </tr>
-          </thead>
-          <tbody>
-          <tr *ngFor="let item of uploader.queue">
-            <td>
-              {{ item?.file?.name }}
-            </td>
-            <td>
-              {{ item?.file?.size/1024/1024 | number:'.2' }} MB
-            </td>
-            <td>
-              <button type="button" class="btn btn-danger btn-xs" (click)="item.remove()">
-                <span class="glyphicon glyphicon-trash"></span>
-                Remove
-              </button>
-              <button type="button" class="btn btn-success btn-xs" (click)="item.upload()">
-                <span class="glyphicon glyphicon-trash"></span>
-                Upload
-              </button>
-            </td>
-          </tr>
-          </tbody>
-        </table>
-      </div>
-    </div>
-    <h6>Upload progress:</h6>
-    <div class="progress" style="">
-      <div class="progress-bar" role="progressbar" [ngStyle]="{ 'width': uploader.progress + '%' }"></div>
-    </div>
-  </div>-->
-<!--    <div *ngIf="uploader.progress ===100?ShowUploadedFiles():false"></div>-->
-<!--    <button (click)="ShowUploadedFiles()"></button>
-    <div *ngFor="let file of savedFiles">
-     <div > <h6>{{file.name}}</h6><p>  {{file.type}}</p></div><div ><button  (click)="downloadFile(file.id,file.name,file.type)"> Download </button></div>
-
-    </div>-->
-
-<div *ngIf="showFileUploadField">
-
-  <app-file-upload></app-file-upload></div>
+<div *ngIf="showFileUploadField">  <app-file-upload></app-file-upload></div>
 
 </div>
 

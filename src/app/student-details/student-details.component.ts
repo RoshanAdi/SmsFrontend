@@ -1,12 +1,12 @@
 import {HttpClient} from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
-import {AuthService} from "../_services/auth.service";
-import {UsernameService} from "../_services/username.service";
+import {AuthService} from "../JwtTokenSetup/_services/auth.service";
+import {UsernameService} from "../JwtTokenSetup/_services/username.service";
 import {Observable} from "rxjs";
 import {map} from "rxjs/operators";
 import {Router} from "@angular/router";
 import {NgForm} from "@angular/forms";
-import {TokenStorageService} from "../_services/token-storage.service";
+import {TokenStorageService} from "../JwtTokenSetup/_services/token-storage.service";
 import jwt_decode from "jwt-decode";
 const USER_KEY = 'auth-user';
 

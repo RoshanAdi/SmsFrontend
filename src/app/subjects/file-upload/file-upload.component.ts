@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {Observable} from "rxjs";
 import {HttpClient, HttpEventType, HttpResponse} from "@angular/common/http";
 import {FileUploadService} from "./file-upload.service";
-import {SubjectsComponent} from "../subjects/subjects.component";
+import {SubjectsComponent} from "../subjects.component";
 
 @Component({
   selector: 'app-file-upload',

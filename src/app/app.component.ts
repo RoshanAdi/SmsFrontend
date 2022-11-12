@@ -1,9 +1,9 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {Subscription} from "rxjs";
-import {TokenStorageService} from "./_services/token-storage.service";
-import {EventBusService} from "./_shared/event-bus.service";
+import {TokenStorageService} from "./JwtTokenSetup/_services/token-storage.service";
+import {EventBusService} from "./JwtTokenSetup/_shared/event-bus.service";
 import {Router} from "@angular/router";
-import {AuthService} from "./_services/auth.service";
+import {AuthService} from "./JwtTokenSetup/_services/auth.service";
 
 @Component({
   selector: 'app-root',

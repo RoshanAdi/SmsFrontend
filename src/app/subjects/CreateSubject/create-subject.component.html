@@ -6,7 +6,8 @@
     <label class="form-label" for="form6Example6">Subject Name</label>
   </div>
 
-  <!-- Message input -->
+  <input hidden type="text" id="form6Example9" name="createrFirstName"  class="form-control" [ngModel]="firstName"/>
+  <input hidden type="text" id="form6Example10" name="createdBy"  class="form-control" [ngModel]="username"/>
   <div class="form-outline mb-2">
     <textarea class="form-control" id="form6Example7" name="description" rows="4" ngModel></textarea>
     <label class="form-label" for="form6Example7">Description</label>
@@ -14,6 +15,7 @@
   <div class="form-check d-flex justify-content-center mb-2">
     <input class="form-check-input me-1" type="checkbox" value="" id="form6Example8" name="active" checked ngModel/>
     <label class="form-check-label" for="form6Example8"> Make visible to Everyone </label>
+
   </div>
 
   <!-- Submit button -->

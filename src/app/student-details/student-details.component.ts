@@ -18,9 +18,10 @@ const USER_KEY = 'auth-user';
 export class StudentDetailsComponent implements OnInit {
 
 
-constructor( private tokenStorage: TokenStorageService,private http:HttpClient,private userNameService: UsernameService, private router: Router,){}
+constructor( private tokenStorage: TokenStorageService,private http:HttpClient,private userNameService: UsernameService, ){}
   myObj:any
 name:any
+  subjects:any
   public firstName: String | undefined;
   public fullName: String | undefined;
   public lastName: String | undefined;
@@ -61,6 +62,7 @@ public StudentUser = false
         this.address = this.myObj.address
         this.age = this.myObj.age
         this.nIc = this.myObj.nIc
+        this.subjects=this.myObj.subjects
               console.log("Printing student = "+this.myObj.firstName)    });
 
 if (Role.slice(5, )=='Student'){
@@ -88,9 +90,6 @@ if (Role.slice(5, )=='Student'){
   })
 
 
-
-
-      //console.log('http://localhost:8089/student/'+this.username)
     window.location.reload();
 
   }

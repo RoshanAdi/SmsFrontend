@@ -1,24 +1,28 @@
 <div style="padding-top: 35px"></div>
 <div style="padding-left: 20px;padding-right: 20px" >
 <div><a href="Subjects/create" class="btn btn-primary" *ngIf="showSubjectList">Create a new subject</a></div>
-<div><button (click)="reload()" class="btn btn-primary" *ngIf="showSelectedSubject">Select a different subject</button></div>
+<div><button (click)="reload()" class="btn btn-primary" *ngIf="showSelectedSubject">Select a different subject</button><div style="display: inline-block;padding-right: 10px">  </div>
+  <div style="display: inline-block" *ngIf="!showMcqCreate" > <div  (click)="loadCreateAssi()" class="btn btn-primary" *ngIf="showAddAssignmentButton">Add a new assignment</div></div></div>
 
   <div *ngIf="showSubjectList">
 
-<div class="card col-md-4"  *ngFor="let obj of myObj">
-  <div class="card-body">
-    <h5 class="card-title">{{obj.subjectName}} </h5>
+<div class="card md-4"  *ngFor="let obj of myObj">
+  <div class="card-header">
+    <h5 class="card-title">{{obj.subjectName}} <p style="float: right ;font-size: x-small; display: inline-block">Created by : {{obj.createrFirstName}}</p> </h5>  </div>
+    <div class= card-body>
     <p class="card-text">{{obj.description}}.</p>
     <p class="card-text">{{obj.subjectId}}</p>
-    <a (click)="loadSubject(obj.subjectId)" class="btn btn-primary stretched-link">Manage</a>
 
-  </div>
+      <button *ngIf="EnrollButton(obj.subjectId)"  style="float: right" (click)="EnrollTeacher(obj.subjectId)">Become a Teacher</button>
+    <button [disabled]="checkTeacher(obj.createdBy,obj.subjectId)" (click)="loadSubject(obj.subjectId)"  class="btn btn-primary ">Manage</button> <!--stretched-link-->
+    </div>
+
 </div>
 </div>
 
-<div *ngIf="showSelectedSubject">
+<div *ngIf="showSelectedSubject&&showAddAssignmentButton">
   <form #updateSub="ngForm" (ngSubmit)="editSub(updateSub.value)">
- <div style="padding-bottom: 10px;padding-top: 10px" *ngIf="!showUpdateInputField"> <h2 class="d-inline">{{myObj1.subjectName}} </h2> <button  (click)="showInputFields()">edit</button><button  (click)="deleteSub(myObj1.subjectId)">Delete</button>
+ <div style="padding-bottom: 10px;padding-top: 10px" *ngIf="!showUpdateInputField"> <h2 class="d-inline">{{myObj1.subjectName}} </h2> <button style="float: right"  (click)="showInputFields()">edit</button><button style="float: right" (click)="deleteSub(myObj1.subjectId)">Delete</button>
    <h4>{{myObj1.description}}</h4></div>
     <legend></legend>
     <div  *ngIf="showUpdateInputField">
@@ -26,20 +30,20 @@
     <textarea rows="4" style="width: 100%; font-size: 15px"  name = "description" ngModel="{{myObj1.description}}" ></textarea><button type="submit" >Update</button>
     </div>  </form>
 
-  <form #editAssig="ngForm" (ngSubmit)="editAssi(editAssig.value)">
+
     <div *ngIf="!showUpdateAssignmentFields">
-    <div *ngFor="let obj0 of myObj1.assigmentList ">
+    <div class="card mt-3" *ngFor="let obj0 of myObj1.assigmentList ">
 
-    <h3 class="d-inline">{{obj0.assigmentTitle}}</h3><button  (click)="showUpdateFieldsAssi(obj0.assigmentID)">Manage</button><button  (click)="deleteAssi(obj0.assigmentID)">Delete</button>
-    <h5>{{obj0.assigmentDiscription}}</h5>
-    <p>{{obj0.assigmentData}}</p>
-      <legend></legend>
+    <div class="card-header"><h3 style="display: inline-block">{{obj0.assigmentTitle}}</h3><button style="float: right;display: inline-block"  (click)="showUpdateFieldsAssi(obj0.assigmentID)">Manage</button><button style="float: right;display: inline-block"  (click)="deleteAssi(obj0.assigmentID)">Delete</button></div>
+      <div class="card-body"><h5>{{obj0.assigmentDiscription}}</h5>
+    <p>{{obj0.assigmentData}}</p></div>
 
 
-    </div> </div>
+    </div> </div></div>
 
     <div *ngIf="showUpdateAssignmentFields">
-      <button *ngIf="!ShowAssiUpdateFields" style="position: center" (click)="showAssiUpdateFields()"  >Edit</button>
+      <form #editAssig="ngForm" (ngSubmit)="editAssi(editAssig.value)">
+      <button *ngIf="!ShowAssiUpdateFields" style=" float: right" (click)="showAssiUpdateFields()"  >Edit</button>
       <div *ngFor="let obj00 of myObj1.assigmentList">
         <div *ngIf="obj00.assigmentID == currentAssignmentId">
          <div *ngIf="ShowAssiUpdateFields" >   <input style="font-size:25px; width: 100%" type="text" name = "assigmentTitle" ngModel="{{obj00.assigmentTitle}}" ><br>
@@ -56,22 +60,23 @@
 
         </div>
       </div>
-
+      </form>
     </div>
 
-  </form>
 
-</div>
+
+
   <div *ngIf="showUpdateAssignmentFields">
   <button  (click)="showMcq(currentAssignmentId)"  >Add Mcq Questions</button>
     <button   (click)="showFileUploadFields()" >Add file</button>
 </div>
 
-  <div *ngIf="!showMcqCreate" > <div  (click)="loadCreateAssi()" class="btn btn-primary" *ngIf="showAddAssignmentButton">Add a new assignment</div></div>
+
   <div style="padding: 10px" *ngIf="showCreateAssign">    <app-create-assingement></app-create-assingement>  </div>
 <div *ngIf="showMcqCreate">  <app-mcq></app-mcq></div>
 
 <div *ngIf="showFileUploadField">  <app-file-upload></app-file-upload></div>
 
 </div>
+
 

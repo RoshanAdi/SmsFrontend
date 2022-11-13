@@ -1,7 +1,9 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {HttpClient, HttpEventType} from "@angular/common/http";
 import {NgForm} from "@angular/forms";
-
+import jwt_decode from "jwt-decode";
+import {UsernameService} from "../JwtTokenSetup/_services/username.service";
+const USER_KEY = 'auth-user';
 
 
 @Component({
@@ -26,6 +28,14 @@ export class SubjectsComponent implements OnInit {
   public ShowAssiUpdateFields:boolean=false;
 public AssignmentIdForMcq:number=0;
   public mcqList: any[] = [];
+  public username:any
+  CurrentNameObj:any
+ currentName:any
+  public subjects:any[]=[]
+  public TeacherEnrolledSubjects:any[]=[]
+  public firstName: String | undefined;
+   currentUser: any;
+   public HideTeacherEnrollButton:boolean = true
 
   @Input()
   requiredFileType: string | undefined;
@@ -34,7 +44,7 @@ public AssignmentIdForMcq:number=0;
 
 public fileDBList:any[]=[]
 
-  constructor(private http:HttpClient) {
+  constructor(private http:HttpClient,private userNameService: UsernameService) {
 
   }
 
@@ -44,9 +54,25 @@ public fileDBList:any[]=[]
       .subscribe(response => {
         this.name = JSON.stringify(response);
         this.myObj = JSON.parse(this.name);
+
       })
     this.showSubjectList = true;
     this.showSelectedSubject = false;
+
+    const user = window.sessionStorage.getItem(USER_KEY);  //taking the current user to allow accessing subjects if this current user has created the subject. otherwise user need to enroll
+    this.currentUser = jwt_decode(String(user));
+    let Role = String(this.currentUser.roles)
+    this.username = this.userNameService.getUserName()
+    this.http
+      .get("http://localhost:8089/"+Role.slice(5, )+"/"+this.username)
+      .subscribe(response=> {
+        this.currentName = JSON.stringify(response);
+        this.CurrentNameObj = JSON.parse(this.currentName);
+        this.firstName = this.CurrentNameObj.firstName
+        this.subjects = this.CurrentNameObj.subjects
+        this.TeacherSubjects()
+      });
+
 
   }
 
@@ -56,6 +82,7 @@ loadSubject(id: any){
     .subscribe(response=> {
       this.name1 = JSON.stringify(response);
       this.myObj1 = JSON.parse(this.name1);
+
       })
   this.showSubjectList = false;
   this.showSelectedSubject = true;
@@ -133,7 +160,29 @@ loadSubject(id: any){
     this.ShowAssiUpdateFields=true;
 
   }
+  EnrollTeacher(id:number){
+    this.http.put('http://localhost:8089/Teacher/Enroll/'+id,id)
+      .subscribe((result) => {
+        console.warn("result", result)
 
+      })
+    window.location.reload()
+  }
+  checkTeacher(createdBy:String,subId:number){
+  if (this.TeacherEnrolledSubjects.includes(subId)){return false}
+  else { return createdBy != this.username;}
+
+  }
+TeacherSubjects(){
+  Object.entries(this.subjects).forEach(([key, value], index) => {
+    Object.entries(value).forEach(([key, value], index) => {
+      if(key=="subjectId"){this.TeacherEnrolledSubjects.push(value)}});});
+ return this.TeacherEnrolledSubjects
+}
+  EnrollButton(subId:number){
+    if (this.TeacherEnrolledSubjects.includes(subId)){return false}
+else {return true}
+  }
 }
 
 

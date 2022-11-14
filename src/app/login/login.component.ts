@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import {NgForm} from "@angular/forms";
 import {HttpClient, HttpHeaders} from "@angular/common/http";
-import {AuthService} from "../_services/auth.service";
-import {TokenStorageService} from "../_services/token-storage.service";
+import {AuthService} from "../JwtTokenSetup/_services/auth.service";
+import {TokenStorageService} from "../JwtTokenSetup/_services/token-storage.service";
 import {Router} from "@angular/router";
 const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' })

@@ -1,12 +1,14 @@
 import {HttpClient} from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
-import {AuthService} from "../_services/auth.service";
-import {UsernameService} from "../_services/username.service";
+import {AuthService} from "../JwtTokenSetup/_services/auth.service";
+import {UsernameService} from "../JwtTokenSetup/_services/username.service";
 import {Observable} from "rxjs";
 import {map} from "rxjs/operators";
 import {Router} from "@angular/router";
 import {NgForm} from "@angular/forms";
-
+import {TokenStorageService} from "../JwtTokenSetup/_services/token-storage.service";
+import jwt_decode from "jwt-decode";
+const USER_KEY = 'auth-user';
 
 @Component({
   selector: 'app-student-details',
@@ -16,9 +18,10 @@ import {NgForm} from "@angular/forms";
 export class StudentDetailsComponent implements OnInit {
 
 
-constructor( private http:HttpClient,private userNameService: UsernameService, private router: Router,){}
+constructor( private tokenStorage: TokenStorageService,private http:HttpClient,private userNameService: UsernameService, ){}
   myObj:any
 name:any
+  subjects:any
   public firstName: String | undefined;
   public fullName: String | undefined;
   public lastName: String | undefined;
@@ -27,16 +30,25 @@ name:any
   public birthDate: String | undefined;
   public address: String | undefined;
   public tp: String | undefined;
+  public nIc: String | undefined;
+  public role: String | undefined;
   public  ShowInputFields = false
   public  HideDetails = true
-
+public StudentUser = false
+  public TeacherUser = false
+  currentUser: any;
 
 
 
   ngOnInit(): void { console.log("printing the username found from token = "+this.userNameService.getUserName())
-const username = this.userNameService.getUserName()
+    const user = window.sessionStorage.getItem(USER_KEY);
+    this.currentUser = jwt_decode(String(user));
+    let Role = String(this.currentUser.roles)
+        console.warn("role found on token = "+Role.slice(5, ))
+
+    const username = this.userNameService.getUserName()
     this.http
-      .get("http://localhost:8089/student/"+username)
+      .get("http://localhost:8089/"+Role.slice(5, )+"/"+username)
       .subscribe(response=> {
               this.name = JSON.stringify(response);
          this.myObj = JSON.parse(this.name);
@@ -44,13 +56,21 @@ const username = this.userNameService.getUserName()
         this.fullName = this.myObj.fullName
         this.lastName = this.myObj.lastName
         this.username = this.myObj.username
+        this.role = this.myObj.role
         this.birthDate = this.myObj.birthDate
         this.tp = this.myObj.tp
         this.address = this.myObj.address
         this.age = this.myObj.age
+        this.nIc = this.myObj.nIc
+        this.subjects=this.myObj.subjects
               console.log("Printing student = "+this.myObj.firstName)    });
 
-
+if (Role.slice(5, )=='Student'){
+  this.StudentUser = true;
+}
+    if (Role.slice(5, )=='Teacher'){
+      this.TeacherUser = true;
+    }
 
 
   }
@@ -60,17 +80,16 @@ const username = this.userNameService.getUserName()
     this.HideDetails = false;
   }
   Update(UpdateData: NgForm) {
-    //console.log("Modified = "+UpdateData.firstName)
-    this.http.put('http://localhost:8089/student/'+this.username, UpdateData)
+    const user = window.sessionStorage.getItem(USER_KEY);
+    this.currentUser = jwt_decode(String(user));
+    let Role = String(this.currentUser.roles)
+    this.http.put('http://localhost:8089/'+Role.slice(5, )+'/'+this.username, UpdateData)
 
   .subscribe((result) => {
     console.warn("result", result)                ////remove
   })
 
 
-
-
-      //console.log('http://localhost:8089/student/'+this.username)
     window.location.reload();
 
   }

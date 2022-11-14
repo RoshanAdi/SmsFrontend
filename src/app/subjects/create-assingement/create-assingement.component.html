@@ -1,0 +1,20 @@
+<form #CreateAssi="ngForm"  (ngSubmit)="Submit(CreateAssi.value)" >
+
+  <div class="form-outline mb-2">
+    <input style=" font-size: 25px" type="text" id="form6Example6" name="assigmentTitle" class="form-control" ngModel/>
+    <label class="form-label" for="form6Example6">Assignment Title</label>
+  </div>
+
+  <div class="form-outline mb-2">
+    <textarea style=" font-size: 20px" class="form-control" id="form6Example7" name="assigmentDiscription" rows="3" ngModel></textarea>
+    <label class="form-label" for="form6Example7">Description</label>
+  </div>
+  <div class="form-outline mb-2">
+    <textarea  style=" font-size: 15px" class="form-control" id="form6Example8" name="assigmentData" rows="6" ngModel></textarea>
+    <label class="form-label" for="form6Example7">Body</label>
+  </div>
+
+  <button style="width: auto" type="submit" class="btn btn-primary btn-block mb-4">Create</button>
+
+
+</form>

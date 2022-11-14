@@ -20,7 +20,7 @@ export class AuthInterceptor implements HttpInterceptor {
   constructor(private tokenService: TokenStorageService, private eventBusService: EventBusService) { }
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<Object>> {
-    let authReq = req;
+       let authReq = req;
     const token = this.tokenService.getToken();
     if (token != null) {
       console.log("Adding token to header = "+token)

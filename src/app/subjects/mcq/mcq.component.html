@@ -1,0 +1,33 @@
+<div class="card mt-3">
+  <form #updateSub="ngForm" (ngSubmit)="submitMcq(updateSub)">
+    <div class="card-header"><h4>Create a Mcq Question:</h4></div>
+    <div style="padding: 10px">
+    <label style="padding: 4px; padding-right: 10px" > Question :  </label>
+    <textarea  type="text"  name="question" rows="1" style="width: 85% "   ngModel></textarea>
+    <div *ngFor=" let choice of Choices ; index as i">
+      <label style="padding: 4px; padding-right: 10px" > {{choice}}  :   </label>
+
+      <textarea  type="text"  name="{{choice}}" rows="1" style="width: 85% "   ngModel></textarea>
+      <input type="checkbox" name="ans{{i+1}}" class="rdCheck"  ngModel/> Correct Answer
+    </div>
+    <button class="btn-add" type="button" (click)="addNewChoice()">Add new choice</button>
+    <button class="btn-submit" type="submit">Save</button>
+    <button class="btn-reset" type="button" (click)="reset(updateSub)">Reset</button></div>
+  </form>
+</div>
+
+<div class="card mt-3" *ngFor="let mcq of mcqList; index as i">
+  <div *ngIf="mcq.choice1" class="card-header">
+    <h4  style="display: inline-block; width: 90%" >Question {{i+1}} </h4> <button  style="float: right;" class="btn-sm-sm" type="button" (click)="DeleteMcq(mcq.id)">Remove</button></div>
+  <div *ngIf="mcq.choice1" class="card-body">
+  <h3 *ngIf="mcq.choice1"> Question : {{mcq.question}}</h3>
+  <h5 *ngIf="mcq.choice1"> Choice 1 : {{mcq.choice1}}<span *ngIf="mcq.ans1" class="glyphicon glyphicon-ok"></span></h5>
+  <h5 *ngIf="mcq.choice2"> Choice 2 : {{mcq.choice2}}<span *ngIf="mcq.ans2" class="glyphicon glyphicon-ok"></span></h5>
+  <h5 *ngIf="mcq.choice3"> Choice 3 : {{mcq.choice3}}<span *ngIf="mcq.ans3" class="glyphicon glyphicon-ok"></span></h5>
+  <h5 *ngIf="mcq.choice4"> Choice 4 : {{mcq.choice4}}<span *ngIf="mcq.ans4" class="glyphicon glyphicon-ok"></span></h5>
+  <h5 *ngIf="mcq.choice5"> Choice 5 : {{mcq.choice5}}<span *ngIf="mcq.ans5" class="glyphicon glyphicon-ok"></span></h5>
+  <h5 *ngIf="mcq.choice6"> Choice 6 : {{mcq.choice6}}<span *ngIf="mcq.ans6" class="glyphicon glyphicon-ok"></span></h5>
+  </div>
+  <div style="padding-bottom: 6px"></div>
+
+</div>

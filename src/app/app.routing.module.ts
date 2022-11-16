@@ -23,6 +23,7 @@ import {NgxWebstorageModule} from "ngx-webstorage";
 import {FileUploadComponent} from "./subjects/file-upload/file-upload.component";
 import {McqComponent} from "./subjects/mcq/mcq.component";
 import {CreateAssingementComponent} from "./subjects/create-assingement/create-assingement.component";
+import {SubjectsStudentViewComponent} from "./subjects/subjects-student-view/subjects-student-view.component";
 
 
 
@@ -40,6 +41,7 @@ const routes: Routes=[
   {path:'Teacher',component:TeacherRegistrationComponent},
   {path:'Subjects',component:SubjectsComponent},
   {path:'Subjects/create',component:CreateSubjectComponent},
+  {path:'Subject/view',component:SubjectsStudentViewComponent}
 
 
 
@@ -47,10 +49,10 @@ const routes: Routes=[
 ];
 
 @NgModule({
-  declarations: [StudRegComponent,LoginComponent, SuccessNoticeComponent, VerifiedNoticeComponent,FailedNoticeComponent,StudentDetailsComponent,TeacherRegistrationComponent,CreateSubjectComponent,SubjectsComponent,FileUploadComponent,McqComponent,CreateAssingementComponent,],
+  declarations: [StudRegComponent,LoginComponent, SuccessNoticeComponent, VerifiedNoticeComponent,FailedNoticeComponent,StudentDetailsComponent,TeacherRegistrationComponent,CreateSubjectComponent,SubjectsComponent,FileUploadComponent,McqComponent,CreateAssingementComponent,SubjectsStudentViewComponent,],
   imports: [CommonModule, RouterModule.forRoot(routes), BrowserModule, FormsModule,HttpClientModule,
     ReactiveFormsModule,FileUploadModule,NgxWebstorageModule.forRoot(),],
 
-  exports: [RouterModule,StudRegComponent,LoginComponent,SuccessNoticeComponent,VerifiedNoticeComponent,FailedNoticeComponent,StudentDetailsComponent,TeacherRegistrationComponent,CreateSubjectComponent,SubjectsComponent,FileUploadComponent,McqComponent,CreateAssingementComponent,]
+  exports: [RouterModule,StudRegComponent,LoginComponent,SuccessNoticeComponent,VerifiedNoticeComponent,FailedNoticeComponent,StudentDetailsComponent,TeacherRegistrationComponent,CreateSubjectComponent,SubjectsComponent,FileUploadComponent,McqComponent,CreateAssingementComponent,SubjectsStudentViewComponent,]
 })
 export class AppRoutingModule { }

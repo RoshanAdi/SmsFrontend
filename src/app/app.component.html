@@ -10,7 +10,8 @@
 <div *ngIf="authService.isNotLoggedIn()">
   <ul class="nav nav-pills pull-right " >
     <li role="presentation"><a routerLink="/StudentDetails">My Profile</a></li>
-    <li role="presentation"><a routerLink="/Subjects">Subjects</a></li>
+   <li *ngIf="!authService.getRole()" role="presentation"><a routerLink="/Subjects">Subjects</a></li>
+    <li *ngIf="authService.getRole()" role="presentation"><a routerLink="/Subject/view">Subjects</a></li>
     <button class="btn btn-outline-primary" (click)="logout()" >Logout</button>
   </ul>
 </div>

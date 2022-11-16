@@ -3,6 +3,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import {NgForm} from "@angular/forms";
 import {TokenStorageService} from "./token-storage.service";
+import jwt_decode from "jwt-decode";
 
 const AUTH_API = 'http://localhost:8089/';
 
@@ -14,6 +15,8 @@ const httpOptions = {
   providedIn: 'root'
 })
 export class AuthService {
+  currentUser: any;
+  public Role:any;
   constructor(private http: HttpClient, private  tokenStorageService: TokenStorageService) { }
 
   login(LoginData: string | NgForm): Observable<any> {
@@ -46,4 +49,11 @@ export class AuthService {
   isNotLoggedIn(){
     return this.tokenStorageService.getToken() != null;
   }
+  getRole(){
+    const user = window.sessionStorage.getItem('auth-user');
+    this.currentUser = jwt_decode(String(user));
+    this.Role = String(this.currentUser.roles)
+      return this.Role.slice(5, )==="Student"
+  }
+
 }

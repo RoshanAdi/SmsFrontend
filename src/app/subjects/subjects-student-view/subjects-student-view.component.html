@@ -5,29 +5,34 @@
 
   <div class="card md-4"  *ngFor="let obj of subjectList">
     <div class="card-header">
-      <h5 class="card-title">{{obj.subjectName}} <p style="float: right ;font-size: x-small; display: inline-block">Created by : {{obj.createrFirstName}}</p> </h5>  </div>
+      <h5 class="card-title">{{obj?.subjectName}} <p style="float: right ;font-size: x-small; display: inline-block">Created by : {{obj?.createrFirstName}}</p> </h5>  </div>
     <div class= card-body>
-      <p class="card-text">{{obj.description}}.</p>
-      <p class="card-text">{{obj.subjectId}}</p>
+      <p class="card-text">{{obj?.description}}.</p>
+      <p class="card-text">{{obj?.subjectId}}</p>
 
-     <button *ngIf="EnrollButton(obj.subjectId)"  style="float: right" (click)="EnrollStudent(obj.subjectId)">Enroll</button>
-      <button [disabled]="checkStud(obj.subjectId)" (click)="loadSubject(obj.subjectId)"  class="btn btn-primary ">View</button> <!--stretched-link-->
+     <button *ngIf="EnrollButton(obj?.subjectId)"  style="float: right" (click)="EnrollStudent(obj?.subjectId)">Enroll</button>
+      <button [disabled]="checkStud(obj?.subjectId)" (click)="loadSubject(obj?.subjectId)"  class="btn btn-primary ">View</button> <!--stretched-link-->
     </div>
 
   </div></div>
 
   <div *ngIf="showSelectedSubject">
 
-      <div style="padding-bottom: 10px;padding-top: 10px" > <h2 class="d-inline">{{CurrentSubject.subjectName}} </h2>
-        <h4>{{CurrentSubject.description}}</h4></div>
+      <div style="padding-bottom: 10px;padding-top: 10px" > <h2 class="d-inline">{{CurrentSubject?.subjectName}} </h2>
+        <h4>{{CurrentSubject?.description}}</h4></div>
       <legend></legend>
 
 
-      <div class="card mt-3" *ngFor="let obj0 of CurrentSubject.assigmentList " >
+      <div class="card mt-3" *ngFor="let obj0 of CurrentSubject?.assigmentList " >
 
-        <div class="card-header"><h3 style="display: inline-block">{{obj0.assigmentTitle}}</h3></div>
-        <div class="card-body"><h5>{{obj0.assigmentDiscription}}</h5>
-          <p>{{obj0.assigmentData}}</p><button class="btn btn-primary stretched-link" (click)="ShowAssignmentContent(obj0.assigmentID)" >View</button></div></div>
+        <div class="card-header"><h3 style="display: inline-block">{{obj0?.assigmentTitle}}</h3>
+         <div style="float: right"> <p> Attempts allowed = {{obj0?.noOfAttempts}}</p>
+          <p> Start time = {{obj0?.startTime}}</p>
+          <p> End time = {{obj0?.endTime}}</p></div>
+        </div>
+        <div class="card-body"><h5>{{obj0?.assigmentDiscription}}</h5><p>
+
+          <button [disabled]="!checkDate(obj0?.startTime,obj0?.endTime,obj0?.assigmentID)" class="btn btn-primary stretched-link" (click)="ShowAssignmentContent(obj0?.assigmentID)" >Attend</button></div></div>
 
    </div>
 <div *ngIf="showAssignmentContent">
@@ -39,89 +44,47 @@
 
   <button (click)="reload()" class="btn btn-primary" >Go Back</button>
   <div  class="card mt-3">
-  <div class="card-header"><h3 style="display: inline-block">{{assignment4Mcq.assigmentTitle}}</h3></div>
-  <div class="card-body"><h5>{{assignment4Mcq.assigmentDiscription}}</h5>
-    <p>{{assignment4Mcq.assigmentData}}</p>
+  <div class="card-header"><h3 style="display: inline-block">{{assignment4Mcq?.assigmentTitle}}</h3><p style="float: right;display: inline-block">{{counter}} Time Left....</p></div>
+  <div class="card-body"><h5>{{assignment4Mcq?.assigmentDiscription}}</h5>
+    <p>{{assignment4Mcq?.assigmentData}}</p>
 
-    <div class="card mt-3" style="padding: 10px">
-      <div class="card-header">Attachments</div>
+    <div *ngIf="fileLength?.length>2" class="card mt-3" style="padding: 10px">
+      <div  class="card-header">Attachments</div>
       <div class="card-body" *ngFor="let file of savedFiles">
         <div > <h6>{{file.name}}</h6><p>  {{file.type}}</p></div><div ><button  (click)="downloadFiles(file.id,file.name,file.type)"> Download </button></div>
         <legend style="padding: 6px"></legend>
       </div>  </div>
 
+    <div style="padding-top: 20px"></div>
 
-  <div   >
-    <!--<div *ngIf="mcq.choice1" class="card-header">
-      <h4 *ngIf="mcq.choice1" style="display: inline-block; width: 90%" >Q{{i+1}}. {{mcq.question}} </h4> </div>
-    <div *ngIf="mcq.choice1" class="card-body">-->
-<!--      <h5 *ngIf="mcq.choice1"><input  type="checkbox" name = "guess1">  1 . {{mcq.choice1}}  </h5>
-      <h5 *ngIf="mcq.choice2"><input  type="checkbox" name = "guess2">  2 . {{mcq.choice2}}  </h5>
-      <h5 *ngIf="mcq.choice3"><input  type="checkbox" name = "guess3">  3 . {{mcq.choice3}}  </h5>
-      <h5 *ngIf="mcq.choice4"><input  type="checkbox" name = "guess4">  4 . {{mcq.choice4}}  </h5>
-      <h5 *ngIf="mcq.choice5"><input  type="checkbox" name = "guess5">  5 . {{mcq.choice5}}  </h5>
-      <h5 *ngIf="mcq.choice6"><input  type="checkbox" name = "guess6">  6 . {{mcq.choice6}}  </h5>-->
+    <form #McqSubmit="ngForm" (ngSubmit)="submitMcq(McqSubmit)" id="mcqform">
+      <div *ngFor="let mcq of assignment4Mcq?.mcqList; index as i">
 
-<div class="border">
-  <form #McqSubmit="ngForm" (ngSubmit)="submitMcq(McqSubmit)"><div *ngFor="let mcq of assignment4Mcq.mcqList; index as i">
-            <div style="padding-top: 10px;padding-left: 30px" >
-              <h3  *ngIf="mcq.choice1" >Q{{i+1}}. {{mcq.question}} </h3>
-            </div>
-            <div class="modal-body">
-              <div class="col-xs-3 5"></div>
-              <div class="quiz" id="quiz" data-toggle="buttons" style="padding: 14px;">
-                <label *ngIf="mcq.choice1" class="element-animation1 btn btn-lg btn-light btn-block"><span class="btn-label"><i class="glyphicon glyphicon-chevron-right"></i></span> <input type="radio" name="guess1" value="1" ngModel>1 . {{mcq.choice1}}</label>
-                <label *ngIf="mcq.choice2" class="element-animation2 btn btn-lg btn-light btn-block"><span class="btn-label"><i class="glyphicon glyphicon-chevron-right"></i></span> <input type="radio" name="guess2" value="2" ngModel>2 . {{mcq.choice2}}</label>
-                <label *ngIf="mcq.choice3" class="element-animation3 btn btn-lg btn-light btn-block"><span class="btn-label"><i class="glyphicon glyphicon-chevron-right"></i></span> <input type="radio" name="guess3" value="3" ngModel>3 . {{mcq.choice3}}</label>
-                <label *ngIf="mcq.choice4" class="element-animation4 btn btn-lg btn-light btn-block"><span class="btn-label"><i class="glyphicon glyphicon-chevron-right"></i></span> <input type="radio" name="guess4" value="4" ngModel>4 . {{mcq.choice4}}</label>
-                <label *ngIf="mcq.choice5" class="element-animation3 btn btn-lg btn-light btn-block"><span class="btn-label"><i class="glyphicon glyphicon-chevron-right"></i></span> <input type="radio" name="guess5" value="3" ngModel>5 . {{mcq.choice5}}</label>
-                <label *ngIf="mcq.choice6" class="element-animation4 btn btn-lg btn-light btn-block"><span class="btn-label"><i class="glyphicon glyphicon-chevron-right"></i></span> <input type="radio" name="guess6" value="4" ngModel>6 . {{mcq.choice6}}</label>
-              </div>
-            </div></div><button style="width: 100%;background-color: forestgreen; height: 30px;" class="btn-submit" type="Submit">Submit</button></form>
-      </div>
-<!--
-      <select class="form-select" size="6" style="font-size:medium" >
-        <option  *ngIf="mcq.choice1" value="1">  1 . {{mcq.choice1}}  </option>
-        <option *ngIf="mcq.choice2" value="2"> 2 . {{mcq.choice2}} </option>
-        <option *ngIf="mcq.choice3" value="3"> 3 . {{mcq.choice3}} </option>
-        <option *ngIf="mcq.choice4" value="1">  4 . {{mcq.choice4}}  </option>
-        <option *ngIf="mcq.choice5" value="2"> 5 . {{mcq.choice5}} </option>
-        <option *ngIf="mcq.choice6" value="3"> 6 . {{mcq.choice6}} </option>
-      </select>-->
-    <!--  <div *ngIf="mcq.choice1" class="form-check ">
-        <input class="form-check-input" type="radio" name="guess1"  >
-        <label class="form-check-label" >  1 . {{mcq.choice1}} </label>
-      </div>
-      <div *ngIf="mcq.choice2" class="form-check ">
-        <input class="form-check-input" type="radio" name="guess2" >
-        <label class="form-check-label" > 2 . {{mcq.choice2}} </label>
-      </div>
-      <div *ngIf="mcq.choice3" class="form-check ">
-        <input class="form-check-input" type="radio" name="guess3"  >
-        <label class="form-check-label" > 3 . {{mcq.choice3}} </label>
-      </div>
-      <div *ngIf="mcq.choice4" class="form-check ">
-        <input class="form-check-input" type="radio" name="guess4"  value="option3" >
-        <label class="form-check-label" > 4 . {{mcq.choice4}}</label>
-      </div>
-      <div *ngIf="mcq.choice5" class="form-check ">
-        <input class="form-check-input" type="radio" name="guess5"  value="option3" >
-        <label class="form-check-label" > 5 . {{mcq.choice5}} </label>
-      </div>
-      <div *ngIf="mcq.choice6" class="form-check ">
-        <input class="form-check-input" type="radio" name="guess6"  value="option3" >
-        <label class="form-check-label" > 6 . {{mcq.choice6}} </label>
-      </div>
--->
-<!--    </div>-->
+
+        <div *ngIf="mcq.choice1" class="card-header">
+   <h4 *ngIf="mcq.choice1" style="display: inline-block; width: 90%" >Q{{i+1}}. {{mcq.question}} </h4> </div>
+ <div *ngIf="mcq.choice1" class="card-body">
+             <div *ngIf="mcq.choice1"><input  type="radio" [name]="mcq.id" value="1" ngModel/>  1 . {{mcq.choice1}}  </div>
+              <div *ngIf="mcq.choice2"><input  type="radio" [name]="mcq.id" value="2" ngModel/>  2 . {{mcq.choice2}}  </div>
+              <div *ngIf="mcq.choice3"><input  type="radio" [name]="mcq.id" value="3" ngModel/>  3 . {{mcq.choice3}}  </div>
+              <div *ngIf="mcq.choice4"><input  type="radio" [name]="mcq.id" value="4" ngModel/>  4 . {{mcq.choice4}}  </div>
+              <div *ngIf="mcq.choice5"><input  type="radio" [name]="mcq.id" value="5" ngModel/>  5 . {{mcq.choice5}}  </div>
+              <div *ngIf="mcq.choice6"><input  type="radio" [name]="mcq.id" value="6" ngModel/>  6 . {{mcq.choice6}}  </div>
+
     <div style="padding-bottom: 6px"></div>
-  </div></div>
+ </div></div> <button *ngIf="assignment4Mcq?.mcqList" style="width: 100%;background-color: forestgreen; height: 30px;"  class="btn-submit" type="Submit" #myButton>Submit</button></form>
+
+
+
+
+
+  </div>
   </div>
 </div>
-
-
-
-
-
-
 </div>
+
+
+
+
+
+

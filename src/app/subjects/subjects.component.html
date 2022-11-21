@@ -49,6 +49,25 @@
          <div *ngIf="ShowAssiUpdateFields" >   <input style="font-size:25px; width: 100%" type="text" name = "assigmentTitle" ngModel="{{obj00.assigmentTitle}}" ><br>
           <textarea rows="4" style="width: 100%; font-size: 15px"  name = "assigmentDiscription" ngModel="{{obj00.assigmentDiscription}}" ></textarea>
           <textarea rows="4" style="width: 100%; font-size: 15px"  name = "assigmentData" ngModel="{{obj00.assigmentData}}" ></textarea>
+           <div class="form-outline mb-2">
+             <select style=" font-size: 15px" class="form-control"  name="noOfAttempts" rows="6" ngModel="{{obj00?.noOfAttempts}}">
+               <option value="1" selected>1</option>
+               <option value="2">2</option>
+               <option value="3">3</option>
+               <option value="4">4</option>
+               <option value="5">5</option>
+               <option value="99">Unlimited</option>
+             </select>
+             <label class="form-label" >Allowed no.of Attempts</label>
+           </div>
+           <div class="form-outline mb-2">
+             <input type="datetime-local"   style=" font-size: 15px" class="form-control" id="form6Example10" name="startTime" rows="6" ngModel="{{obj00?.startTime}}">
+             <label class="form-label" >Start date and Time</label>
+           </div>
+           <div class="form-outline mb-2">
+             <input type="datetime-local"   style=" font-size: 15px" class="form-control" id="form6Example11" name="endTime" rows="6" ngModel="{{obj00?.endTime}}">
+             <label class="form-label" >End date and Time</label>
+           </div>
          </div>
           <div *ngIf="!ShowAssiUpdateFields">
             <h2>{{obj00.assigmentTitle}}</h2>
@@ -69,6 +88,7 @@
   <div *ngIf="showUpdateAssignmentFields">
   <button  (click)="showMcq(currentAssignmentId)"  >Add Mcq Questions</button>
     <button   (click)="showFileUploadFields()" >Add file</button>
+    <button   (click)="showEssayQuestion()" >Add essay type Question</button>
 </div>
 
 
@@ -76,7 +96,7 @@
 <div *ngIf="showMcqCreate">  <app-mcq></app-mcq></div>
 
 <div *ngIf="showFileUploadField">  <app-file-upload></app-file-upload></div>
-
+<div *ngIf="showEssayQ" ><app-essay-question></app-essay-question></div>
 </div>
 
 

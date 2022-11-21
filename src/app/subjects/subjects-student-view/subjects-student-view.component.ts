@@ -39,6 +39,7 @@ export class SubjectsStudentViewComponent implements OnInit {
   public currentTime: any;
   public counter: any;
   public fileLength: any;
+  public days: any;
   constructor(private router: Router,private http:HttpClient,private userNameService: UsernameService,@Inject(LOCALE_ID) private locale: string) { }
 
   ngOnInit(): void {this.http
@@ -49,7 +50,7 @@ export class SubjectsStudentViewComponent implements OnInit {
     })
     this.showSubjectList = true;
     this.showSelectedSubject = false;
-
+    clearInterval(this.interval);
     this.username = this.userNameService.getUserName()
     this.http
       .get("http://localhost:8089/Student/Subjects/"+this.username)
@@ -100,9 +101,13 @@ export class SubjectsStudentViewComponent implements OnInit {
   }
   reload(){
     window.location.reload();
-
+    clearInterval(this.interval);
   }
-  ShowAssignmentContent(assigmentID:number){
+  ShowAssignmentContent(endTime:string,assigmentID:number){
+    this.AssignmentId = assigmentID
+    this.EndTime = endTime
+
+    this.LoadEssay()
     this.http
       .get("http://localhost:8089/Assignment/"+assigmentID)
       .subscribe(response=> {
@@ -110,28 +115,27 @@ export class SubjectsStudentViewComponent implements OnInit {
         this.savedFiles = this.assignment4Mcq.fileDBList;
         this.fileLength = JSON.stringify(this.savedFiles)
         this.mcqList = this.assignment4Mcq.mcqList
+this.startTimer()
 
 
-
-        this.AssignmentId = assigmentID
 
       })
+
     this.http
       .get("http://localhost:8089/marks/"+this.username+assigmentID.toString())
       .subscribe(response=> {
         if(response==null){this.showSelectedSubject =false
           this.showAssignmentContent = true
           alert("Your First Attempt!")
-          this.startTimer()
         }
         else {
       this.marksToCheckAttempt = JSON.parse(JSON.stringify(response));
-        if (this.marksToCheckAttempt.attempt<=Number(this.assignment4Mcq.noOfAttempts)){
+        if (this.marksToCheckAttempt?.attempt<=Number(this.assignment4Mcq?.noOfAttempts)){
         this.showSelectedSubject =false
         this.showAssignmentContent = true
-        alert("Attempt "+ this.marksToCheckAttempt.attempt+". Only "+ this.assignment4Mcq.noOfAttempts+" attempts are allowed!.")
-           this.startTimer()  }
-      else {alert("Only "+ this.assignment4Mcq.noOfAttempts+" attempts are allowed!. You have already attended"+this.assignment4Mcq.noOfAttempts+" times")
+        alert("Attempt "+ this.marksToCheckAttempt?.attempt+". Only "+ this.assignment4Mcq?.noOfAttempts+" attempts are allowed!.")
+ }
+      else {alert("Only "+ this.assignment4Mcq?.noOfAttempts+" attempts are allowed!. You have already attended"+this.assignment4Mcq?.noOfAttempts+" times")
         this.showAssignmentContent = false}}
       })
     return this.assignment4Mcq;
@@ -156,6 +160,7 @@ export class SubjectsStudentViewComponent implements OnInit {
   }
 
   submitMcq(mcq:NgForm){
+    clearInterval(this.interval);
     this.mcqs = mcq.value;
     this.marks = 0
     Object.entries(this.mcqs).forEach(([mcq, mcqvalue], index1) => {
@@ -183,9 +188,7 @@ export class SubjectsStudentViewComponent implements OnInit {
     let Start = new Date(startTime).getTime()
     let End = new Date(endTime).getTime()
     let CurrentTime = new Date().getTime()
-this.StartTime = Start
-    this.EndTime = End
-    this.currentTime = CurrentTime
+
 
 return CurrentTime >= Start && CurrentTime <= End
 
@@ -193,31 +196,59 @@ return CurrentTime >= Start && CurrentTime <= End
   public timeLeft: any;
   public interval: string | number | NodeJS.Timer | undefined;
   @ViewChild('myButton') myButton : any
-
+  @ViewChild('EssayButton') EssayButton : any
 
   startTimer() {
-    this.timeLeft = Number(this.EndTime - this.currentTime)/(1000)
+    let end = new Date(this.EndTime).getTime()
+    this.timeLeft = Number(end - new Date().getTime())/(1000)
 
-    this.interval = setInterval(() => {
-      this.counter = new Date((this.timeLeft) * 1000).toISOString().substring(11, 19)
-      if(100<this.EndTime && this.EndTime <=this.currentTime){
-               let el: HTMLElement = this.myButton.nativeElement as HTMLElement;
-        el.click()
-        clearInterval(this.interval);
-
-      }
-
-else {
+   this.interval = setInterval(() => {
       if(this.timeLeft > 0) {
         this.timeLeft--;
+        this.counter = new Date((this.timeLeft) * 1000).toISOString().substring(11, 19)
+        this.days = new Date((this.timeLeft) * 1000).toISOString().substring(9, 10)
       }
-
-      else { let el: HTMLElement = this.myButton.nativeElement as HTMLElement;
-        el.click()
+      else {
+        let el: HTMLElement = this.myButton?.nativeElement as HTMLElement;
+        el?.click()
+        let essay: HTMLElement = this.EssayButton?.nativeElement as HTMLElement;
+        essay?.click()
         clearInterval(this.interval);
-      }}
+      }
     },1000)
   }
 
+  public QuestionsList: any;
+  public questionsList: any;
 
+
+ LoadEssay() {
+
+    this.http
+      .get("http://localhost:8089/EssayQuestions/"+this.AssignmentId)
+      .subscribe(response => {
+        this.QuestionsList = JSON.stringify(response);
+        this.questionsList = JSON.parse(this.QuestionsList);
+        console.error(this.QuestionsList)
+      })
+    return this.questionsList;
+
+  }
+
+  public answerArray:any
+  EssaySubmit(Answers:NgForm){
+    clearInterval(this.interval);
+    console.error(JSON.stringify(Answers.value))
+
+  this.answerArray = Answers.value
+
+
+    this.http
+      .post("http://localhost:8089/EssayQuestions/answerSubmit/"+this.AssignmentId+'/'+this.username,JSON.stringify(this.answerArray ))
+      .subscribe(response => {
+
+      })
+    alert("Submitted for grading")
+    this.reload()
+  }
 }

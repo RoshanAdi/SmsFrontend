@@ -43,6 +43,7 @@ public AssignmentIdForMcq:number=0;
   public blob:any;
 
 public fileDBList:any[]=[]
+  public showEssayQ: boolean = false;
 
   constructor(private http:HttpClient,private userNameService: UsernameService) {
 
@@ -148,14 +149,22 @@ loadSubject(id: any){
     this.showMcqCreate = true
     this.AssignmentIdForMcq = id;
     this.showFileUploadField = false
+    this.showEssayQ = false
   }
 
 
   showFileUploadFields(){
     this.showFileUploadField = true;
     this.showMcqCreate = false
-
+    this.showEssayQ = false
   }
+
+  showEssayQuestion(){
+    this.showEssayQ = true
+    this.showMcqCreate = false
+    this.showFileUploadField = false;
+  }
+
   showAssiUpdateFields(){
     this.ShowAssiUpdateFields=true;
 
@@ -180,9 +189,9 @@ TeacherSubjects(){
  return this.TeacherEnrolledSubjects
 }
   EnrollButton(subId:number){
-    if (this.TeacherEnrolledSubjects.includes(subId)){return false}
-else {return true}
+    return !this.TeacherEnrolledSubjects.includes(subId);
   }
+
 }
 
 

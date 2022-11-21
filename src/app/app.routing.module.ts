@@ -13,7 +13,7 @@ import {HTTP_INTERCEPTORS, HttpClientModule} from "@angular/common/http";
 import { SuccessNoticeComponent } from './UserRegistraion/success-notice/success-notice.component';
 import { VerifiedNoticeComponent } from './UserRegistraion/verified-notice/verified-notice.component';
 import { FailedNoticeComponent } from './UserRegistraion/failed-notice/failed-notice.component';
-import {StudentDetailsComponent} from "./student-details/student-details.component";
+import {StudentDetailsComponent} from "./student-teacher-profile/student-details.component";
 import {AuthInterceptor} from "./JwtTokenSetup/_helpers/auth.interceptor";
 import {TeacherRegistrationComponent} from "./UserRegistraion/teacher-registration/teacher-registration.component";
 import {CreateSubjectComponent} from "./subjects/CreateSubject/create-subject.component";
@@ -25,6 +25,7 @@ import {McqComponent} from "./subjects/mcq/mcq.component";
 import {CreateAssingementComponent} from "./subjects/create-assingement/create-assingement.component";
 import {SubjectsStudentViewComponent} from "./subjects/subjects-student-view/subjects-student-view.component";
 import {ShowMarksComponent} from "./subjects/show-marks/show-marks.component";
+import {EssayQuestionComponent} from "./subjects/essay-question-creation/essay-question.component";
 
 
 
@@ -52,10 +53,10 @@ const routes: Routes=[
 ];
 
 @NgModule({
-  declarations: [StudRegComponent,LoginComponent, SuccessNoticeComponent, VerifiedNoticeComponent,FailedNoticeComponent,StudentDetailsComponent,TeacherRegistrationComponent,CreateSubjectComponent,SubjectsComponent,FileUploadComponent,McqComponent,CreateAssingementComponent,SubjectsStudentViewComponent,ShowMarksComponent],
+  declarations: [StudRegComponent,LoginComponent, SuccessNoticeComponent, VerifiedNoticeComponent,FailedNoticeComponent,StudentDetailsComponent,TeacherRegistrationComponent,CreateSubjectComponent,SubjectsComponent,FileUploadComponent,McqComponent,CreateAssingementComponent,SubjectsStudentViewComponent,ShowMarksComponent,EssayQuestionComponent],
   imports: [CommonModule, RouterModule.forRoot(routes), BrowserModule, FormsModule,HttpClientModule,
     ReactiveFormsModule,FileUploadModule,NgxWebstorageModule.forRoot(),],
 
-  exports: [RouterModule,StudRegComponent,LoginComponent,SuccessNoticeComponent,VerifiedNoticeComponent,FailedNoticeComponent,StudentDetailsComponent,TeacherRegistrationComponent,CreateSubjectComponent,SubjectsComponent,FileUploadComponent,McqComponent,CreateAssingementComponent,SubjectsStudentViewComponent,ShowMarksComponent]
+  exports: [RouterModule,StudRegComponent,LoginComponent,SuccessNoticeComponent,VerifiedNoticeComponent,FailedNoticeComponent,StudentDetailsComponent,TeacherRegistrationComponent,CreateSubjectComponent,SubjectsComponent,FileUploadComponent,McqComponent,CreateAssingementComponent,SubjectsStudentViewComponent,ShowMarksComponent,EssayQuestionComponent]
 })
 export class AppRoutingModule { }

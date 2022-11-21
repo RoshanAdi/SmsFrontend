@@ -32,7 +32,7 @@
         </div>
         <div class="card-body"><h5>{{obj0?.assigmentDiscription}}</h5><p>
 
-          <button [disabled]="!checkDate(obj0?.startTime,obj0?.endTime,obj0?.assigmentID)" class="btn btn-primary stretched-link" (click)="ShowAssignmentContent(obj0?.assigmentID)" >Attend</button></div></div>
+          <button [disabled]="!checkDate(obj0?.startTime,obj0?.endTime,obj0?.assigmentID)" class="btn btn-primary stretched-link" (click)="ShowAssignmentContent(obj0?.endTime,obj0?.assigmentID)" >Attend</button></div></div>
 
    </div>
 <div *ngIf="showAssignmentContent">
@@ -44,7 +44,7 @@
 
   <button (click)="reload()" class="btn btn-primary" >Go Back</button>
   <div  class="card mt-3">
-  <div class="card-header"><h3 style="display: inline-block">{{assignment4Mcq?.assigmentTitle}}</h3><p style="float: right;display: inline-block">{{counter}} Time Left....</p></div>
+  <div class="card-header"><h3 style="display: inline-block">{{assignment4Mcq?.assigmentTitle}}</h3><p style="float: right;display: inline-block"> {{days-1}} Days and {{counter}}  Left....</p></div>
   <div class="card-body"><h5>{{assignment4Mcq?.assigmentDiscription}}</h5>
     <p>{{assignment4Mcq?.assigmentData}}</p>
 
@@ -57,7 +57,7 @@
 
     <div style="padding-top: 20px"></div>
 
-    <form #McqSubmit="ngForm" (ngSubmit)="submitMcq(McqSubmit)" id="mcqform">
+    <form #McqSubmit="ngForm"  (ngSubmit)="submitMcq(McqSubmit)" id="mcqform">
       <div *ngFor="let mcq of assignment4Mcq?.mcqList; index as i">
 
 
@@ -72,14 +72,32 @@
               <div *ngIf="mcq.choice6"><input  type="radio" [name]="mcq.id" value="6" ngModel/>  6 . {{mcq.choice6}}  </div>
 
     <div style="padding-bottom: 6px"></div>
- </div></div> <button *ngIf="assignment4Mcq?.mcqList" style="width: 100%;background-color: forestgreen; height: 30px;"  class="btn-submit" type="Submit" #myButton>Submit</button></form>
+ </div></div>
+    </form>
+      <form #EssaySaub="ngForm"  (ngSubmit)="EssaySubmit(EssaySaub)" >
+        <div class="card mt-3" *ngFor="let question of questionsList; index as i">
+          <div *ngIf="question?.question" class="card-header">
+            <h4  style="display: inline-block; width: 90%" >Question {{i+1}} </h4> <p style="float: right" *ngIf="question?.question"> Marks : {{question?.marks}}</p></div>
+          <div *ngIf="question?.question" class="card-body">
+            <h5 *ngIf="question?.question">{{question?.question}}</h5>
+            <input hidden value="{{question?.marks}}"  name="marks{{i}}" ngModel>
+            <textarea  *ngIf="question?.question" rows="3" style="width: 100%" name="{{question?.question}}" ngModel></textarea>
+
+          </div>
+          <div style="padding-bottom: 6px"></div>
+
+        </div>
+        <button *ngIf="questionsList.length>0"  style="width: 100%;background-color: forestgreen; height: 30px;"  class="btn-submit" type="Submit" #EssayButton >Submit</button>
+      </form>
 
 
-
-
-
+      <button *ngIf="assignment4Mcq?.mcqList.length>0" form="mcqform" style="width: 100%;background-color: forestgreen; height: 30px;"  class="btn-submit" type="Submit" #myButton>Submit</button>
   </div>
   </div>
+
+
+
+
 </div>
 </div>
 

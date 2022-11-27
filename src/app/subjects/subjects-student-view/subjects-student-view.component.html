@@ -74,15 +74,13 @@
     <div style="padding-bottom: 6px"></div>
  </div></div>
     </form>
-      <form #EssaySaub="ngForm"  (ngSubmit)="EssaySubmit(EssaySaub)" >
+      <form #EssaySaub="ngForm"  name="ansers" (ngSubmit)="EssaySubmit(EssaySaub)" >
         <div class="card mt-3" *ngFor="let question of questionsList; index as i">
           <div *ngIf="question?.question" class="card-header">
             <h4  style="display: inline-block; width: 90%" >Question {{i+1}} </h4> <p style="float: right" *ngIf="question?.question"> Marks : {{question?.marks}}</p></div>
           <div *ngIf="question?.question" class="card-body">
             <h5 *ngIf="question?.question">{{question?.question}}</h5>
-            <input hidden value="{{question?.marks}}"  name="marks{{i}}" ngModel>
-            <textarea  *ngIf="question?.question" rows="3" style="width: 100%" name="{{question?.question}}" ngModel></textarea>
-
+              <textarea  *ngIf="question?.question" rows="3" style="width: 100%" name="{{question?.id}}" ngModel></textarea>
           </div>
           <div style="padding-bottom: 6px"></div>
 

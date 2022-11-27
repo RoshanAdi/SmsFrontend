@@ -3,7 +3,7 @@ import {HttpClient} from "@angular/common/http";
 import {UsernameService} from "../../JwtTokenSetup/_services/username.service";
 import {NgForm} from "@angular/forms";
 import {dateTimestampProvider} from "rxjs/internal/scheduler/dateTimestampProvider";
-import {formatDate, getLocaleDateFormat} from "@angular/common";
+import {formatDate, getLocaleDateFormat, KeyValue} from "@angular/common";
 import {Router} from "@angular/router";
 
 @Component({
@@ -175,13 +175,14 @@ this.startTimer()
           if(key==="ans6"&& mcqvalue==="6" && valuee===true && index1==index2){this.marks = this.marks+1; console.error("key = "+key+" value = "+valuee+" mcqvalue = "+mcqvalue);console.warn(this.marks)}
         });});});
     this.MarksArray = {"marks":this.marks.toString()+"/"+this.mcqList.length.toString(),"marksupdateId":this.username+this.AssignmentId}
-    localStorage.setItem("marks",this.marks.toString()+"/"+this.mcqList.length.toString() )
+/*    localStorage.setItem("marks",this.marks.toString()+"/"+this.mcqList.length.toString() )*/
     this.http.put('http://localhost:8089/marks/'+this.AssignmentId+'/'+this.username,this.MarksArray)
       .subscribe((result) => {
 
       })
-
-    this.router.navigate(['/showMarks']);
+alert("Marks = "+this.marks.toString()+"/"+this.mcqList.length.toString() )
+    this.reload()
+   /* this.router.navigate(['/showMarks']);*/
   }
 
   checkDate(startTime:string,endTime:string,assigmentID:number){
@@ -234,21 +235,30 @@ return CurrentTime >= Start && CurrentTime <= End
     return this.questionsList;
 
   }
-
+  public newArray:any[]=[]
   public answerArray:any
+;
   EssaySubmit(Answers:NgForm){
+    Object.entries(Answers.value).find(([key, value]) => {
+      console.error("key = "+key+" value = "+value)
+
+    });
+/*   this.newArray.push({essayAnswersList:Answers.value})*/
     clearInterval(this.interval);
-    console.error(JSON.stringify(Answers.value))
 
-  this.answerArray = Answers.value
-
-
+/*
+  this.answerArray = JSON.parse(JSON.stringify(Answers.value))*/
+this.answerArray=JSON.parse(JSON.stringify(Answers.value))
+    console.error("json string = "+JSON.stringify(this.answerArray))
+    console.error(this.username)
     this.http
-      .post("http://localhost:8089/EssayQuestions/answerSubmit/"+this.AssignmentId+'/'+this.username,JSON.stringify(this.answerArray ))
+      .post("http://localhost:8089/EssayQuestions/answerSubmit/"+this.AssignmentId+'/'+this.username,JSON.stringify(this.answerArray))
       .subscribe(response => {
 
       })
     alert("Submitted for grading")
-    this.reload()
+this.reload()
   }
+
+
 }

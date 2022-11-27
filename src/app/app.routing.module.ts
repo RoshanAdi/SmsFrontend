@@ -24,8 +24,9 @@ import {FileUploadComponent} from "./subjects/file-upload/file-upload.component"
 import {McqComponent} from "./subjects/mcq/mcq.component";
 import {CreateAssingementComponent} from "./subjects/create-assingement/create-assingement.component";
 import {SubjectsStudentViewComponent} from "./subjects/subjects-student-view/subjects-student-view.component";
-import {ShowMarksComponent} from "./subjects/show-marks/show-marks.component";
+
 import {EssayQuestionComponent} from "./subjects/essay-question-creation/essay-question.component";
+import {GradingAnswersComponent} from "./grading-answers/grading-answers.component";
 
 
 
@@ -45,7 +46,8 @@ const routes: Routes=[
   {path:'Subjects',component:SubjectsComponent},
   {path:'Subjects/create',component:CreateSubjectComponent},
   {path:'Subject/view',component:SubjectsStudentViewComponent},
-  {path:'showMarks',component:ShowMarksComponent},
+  {path:'Submissions',component:GradingAnswersComponent},
+
 
 
 
@@ -53,10 +55,10 @@ const routes: Routes=[
 ];
 
 @NgModule({
-  declarations: [StudRegComponent,LoginComponent, SuccessNoticeComponent, VerifiedNoticeComponent,FailedNoticeComponent,StudentDetailsComponent,TeacherRegistrationComponent,CreateSubjectComponent,SubjectsComponent,FileUploadComponent,McqComponent,CreateAssingementComponent,SubjectsStudentViewComponent,ShowMarksComponent,EssayQuestionComponent],
+  declarations: [StudRegComponent,LoginComponent, SuccessNoticeComponent, VerifiedNoticeComponent,FailedNoticeComponent,StudentDetailsComponent,TeacherRegistrationComponent,CreateSubjectComponent,SubjectsComponent,FileUploadComponent,McqComponent,CreateAssingementComponent,SubjectsStudentViewComponent,EssayQuestionComponent,GradingAnswersComponent],
   imports: [CommonModule, RouterModule.forRoot(routes), BrowserModule, FormsModule,HttpClientModule,
     ReactiveFormsModule,FileUploadModule,NgxWebstorageModule.forRoot(),],
 
-  exports: [RouterModule,StudRegComponent,LoginComponent,SuccessNoticeComponent,VerifiedNoticeComponent,FailedNoticeComponent,StudentDetailsComponent,TeacherRegistrationComponent,CreateSubjectComponent,SubjectsComponent,FileUploadComponent,McqComponent,CreateAssingementComponent,SubjectsStudentViewComponent,ShowMarksComponent,EssayQuestionComponent]
+  exports: [RouterModule,StudRegComponent,LoginComponent,SuccessNoticeComponent,VerifiedNoticeComponent,FailedNoticeComponent,StudentDetailsComponent,TeacherRegistrationComponent,CreateSubjectComponent,SubjectsComponent,FileUploadComponent,McqComponent,CreateAssingementComponent,SubjectsStudentViewComponent,EssayQuestionComponent,GradingAnswersComponent]
 })
 export class AppRoutingModule { }

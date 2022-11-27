@@ -1,7 +1,7 @@
 import {Component, Inject, LOCALE_ID, OnInit} from '@angular/core';
 import {Router} from "@angular/router";
 import {HttpClient} from "@angular/common/http";
-import {UsernameService} from "../JwtTokenSetup/_services/username.service";
+import {UsernameService} from "../../JwtTokenSetup/_services/username.service";
 import {NgForm} from "@angular/forms";
 import {ThisReceiver} from "@angular/compiler";
 
@@ -28,7 +28,12 @@ export class GradingAnswersComponent implements OnInit {
   public marks:number = 0
   public counter:number=1
   public Save:string="Save"
-
+  private blob: any;
+  public assignment: any;
+  public savedFiles: any;
+  public fileLength: any;
+  public studentFileDBList: any;
+  public studentFileListLength: any;
   constructor(private router: Router, private http: HttpClient, private userNameService: UsernameService, @Inject(LOCALE_ID) private locale: string) {
   }
   ngOnInit(): void {
@@ -62,8 +67,21 @@ public answer:any[]=[]
 
   public stringifyanswer:any
   public stringfyAssi:any
-
+public stringfyassiment:any
   ShowSubmissions(assigmentID:number){
+
+    this.http
+      .get("http://localhost:8089/Assignment/"+assigmentID)
+      .subscribe(response=> {
+        this.assignment = JSON.parse(JSON.stringify(response));
+        this.stringfyassiment = JSON.stringify(response)
+        this.savedFiles = this.assignment.fileDBList;
+        this.fileLength = JSON.stringify(this.savedFiles)
+
+        this.studentFileDBList=this.assignment?.studentFileDBList
+        this.studentFileListLength = JSON.stringify( this.studentFileDBList)
+      })
+
     this.http
       .get("http://localhost:8089/Assignment/"+assigmentID)
       .subscribe(response=> {
@@ -86,7 +104,10 @@ this.stringfyAssi = JSON.stringify(response)
        })
 
 
-      }
+
+         }
+
+
       removeDuplicates(){
         let dic = new Map<string, string>();
         let anserList:any[]=[]
@@ -134,10 +155,34 @@ this.stringfyAssi = JSON.stringify(response)
 
       }
     }
-
+this.Save = "Graded!"
 return false;
   }
   finishGrading(){
     window.location.reload()
+  }
+
+  downloadProvidedFiles(id: string, fileName: string, fileType: string) {
+    this.http
+      .get<Blob>("http://localhost:8089/files/download/" + id, {responseType: 'blob' as 'json'})
+      .subscribe((data) => {
+
+        this.blob = new Blob([data], {type: fileType});
+
+        var downloadURL = window.URL.createObjectURL(data);
+        var link = document.createElement('a');
+        link.href = downloadURL;
+        link.download = fileName;
+        link.click();
+
+      });
+
+  }
+
+  submitFileMarks(marks:NgForm){
+    this.http.post('http://localhost:8089/marks/File/100',marks.value)
+      .subscribe((result) => {
+
+      })
   }
 }

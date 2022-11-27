@@ -52,6 +52,7 @@ export class SubjectsStudentViewComponent implements OnInit {
     this.showSelectedSubject = false;
     clearInterval(this.interval);
     this.username = this.userNameService.getUserName()
+    localStorage.setItem("username",this.username)
     this.http
       .get("http://localhost:8089/Student/Subjects/"+this.username)
       .subscribe(response=> {
@@ -113,6 +114,7 @@ export class SubjectsStudentViewComponent implements OnInit {
       .subscribe(response=> {
                this.assignment4Mcq = JSON.parse(JSON.stringify(response));
         this.savedFiles = this.assignment4Mcq.fileDBList;
+        localStorage.setItem("AssignmentID",String(assigmentID))
         this.fileLength = JSON.stringify(this.savedFiles)
         this.mcqList = this.assignment4Mcq.mcqList
 this.startTimer()

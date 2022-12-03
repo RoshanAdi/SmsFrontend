@@ -16,11 +16,12 @@ const USER_KEY = 'auth-user';
   styleUrls: ['./student-details.component.css']
 })
 export class StudentDetailsComponent implements OnInit {
+  public marks: any;
 
 
 constructor( private tokenStorage: TokenStorageService,private http:HttpClient,private userNameService: UsernameService, ){}
   myObj:any
-name:any
+userDetails:any
   subjects:any
   public firstName: String | undefined;
   public fullName: String | undefined;
@@ -50,8 +51,9 @@ public StudentUser = false
     this.http
       .get("http://localhost:8089/"+Role.slice(5, )+"/"+username)
       .subscribe(response=> {
-              this.name = JSON.stringify(response);
-         this.myObj = JSON.parse(this.name);
+              this.userDetails = JSON.stringify(response);
+        console.error(JSON.stringify(response))
+         this.myObj = JSON.parse(this.userDetails);
          this.firstName = this.myObj.firstName
         this.fullName = this.myObj.fullName
         this.lastName = this.myObj.lastName
@@ -63,6 +65,7 @@ public StudentUser = false
         this.age = this.myObj.age
         this.nIc = this.myObj.nIc
         this.subjects=this.myObj.subjects
+        this.marks = this.myObj.marks
               console.log("Printing student = "+this.myObj.firstName)    });
 
 if (Role.slice(5, )=='Student'){
@@ -92,5 +95,9 @@ if (Role.slice(5, )=='Student'){
 
     window.location.reload();
 
+  }
+  width(mark:string){
+    var mySubString = mark.split("/",2)
+   return ((Number(mySubString[0])/Number(mySubString[1]))*100)
   }
 }

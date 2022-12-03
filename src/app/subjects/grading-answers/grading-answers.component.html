@@ -1,0 +1,84 @@
+<div style="padding-top: 35px"></div>
+<div style="padding-left: 20px;padding-right: 20px" >
+
+  <div *ngIf="showSubjectList">
+<h3 style="position: center">My Subjects With Active Assignments</h3>
+  <div class="card md-4"  *ngFor="let obj of subjectList">
+    <div class="card-header">
+      <h5 class="card-title">{{obj?.subjectName}} <p style="float: right ;font-size: x-small; display: inline-block">Created by : {{obj?.createrFirstName}}</p> </h5>  </div>
+    <div class= card-body>
+      <p class="card-text">{{obj?.description}}.</p>
+      <p class="card-text">{{obj?.subjectId}}</p>
+      <button  (click)="loadSubject(obj?.subjectId)"  class="btn btn-primary ">View</button> <!--stretched-link-->
+    </div>
+  </div>
+  </div>
+
+  <div *ngIf="showSelectedSubject">
+    <div style="padding-bottom: 10px;padding-top: 10px" > <h2 class="d-inline">{{CurrentSubject?.subjectName}} </h2>
+      <h4>{{CurrentSubject?.description}}</h4></div>
+    <legend></legend>
+    <div class="card mt-3" *ngFor="let obj0 of CurrentSubject?.assigmentList " >
+      <div class="card-header"><h3 style="display: inline-block">{{obj0?.assigmentTitle}}</h3>
+        <div style="float: right"> <p> Attempts allowed = {{obj0?.noOfAttempts}}</p>
+          <p> Start time = {{obj0?.startTime}}</p>
+          <p> End time = {{obj0?.endTime}}</p></div></div>
+      <div class="card-body"><h5>{{obj0?.assigmentDiscription}}</h5><p>
+        <button  class="btn btn-primary stretched-link" (click)="ShowSubmissions(obj0?.assigmentID)" >Grade Submissions</button></div></div>
+  </div>
+
+  <div *ngIf="showSubmissions">
+    <button  (click)="finishGrading()" class="btn btn-primary ">Finish Grading</button>
+    <div ><h3 style="display: inline-block">{{Assignment?.assigmentTitle}}</h3>
+  <h5>{{Assignment?.assigmentDiscription}}</h5>
+      <p>{{Assignment?.assigmentData}}</p>
+      <legend></legend>
+      <div *ngFor="let question of Assignment?.essayList ; index as i">
+      <h6> Question {{i+1}}</h6><p style="display: inline-block"> {{question?.question}}</p ><p style="display: inline-block; float: right"> Marks : {{question?.marks}} </p>
+      </div> </div>
+
+    <div *ngIf="fileLength?.length>2" class="card mt-3" style="padding: 10px">
+      <div  class="card-header">Provided documents</div>
+      <div class="card-body" *ngFor="let file of savedFiles">
+        <div > <h6>{{file.name}}</h6><p>  {{file.type}}</p></div><div ><button  (click)="downloadProvidedFiles(file.id,file.name,file.type)"> Download </button></div>
+        <legend style="padding: 6px"></legend>
+      </div>
+    </div>
+    <legend></legend>
+    <h3 style="padding: 10px"> Submissions </h3>
+      <div class="card mt-3" *ngFor="let username of usernamesList; index as i" >
+        <form #MarksSub="ngForm" (ngSubmit)="submitMarks(MarksSub)">
+      <div class="card-header" ><h6 style="display: inline-block" >{{i+1}}. Student : {{username}}</h6>
+         <input style="display: inline-block;float: right" type="text" name="marks" placeholder="Total Marks" ngModel>
+        <p style="padding-right: 15px;display: inline-block;float: right"></p><button [disabled]="!NotMarkedYet(usernamesList[i]+AssignmentId)" class="btn btn-primary" style="display: inline-block;float: right" type="Submit">Save</button>
+        <input hidden name="studentUsername"  [ngModel]="username">
+        <input hidden name="assignmentId"  [ngModel]="AssignmentId">
+        <input hidden name="marksupdateId"  [ngModel]="username+AssignmentId">
+      </div>
+        </form>
+    <div  *ngFor="let answer of EssayAnswers; index as j" >
+      <div *ngIf="answer?.username==username">
+      <div class="card-body" >
+       <p>
+       {{1+j-(EssayAnswers.length/usernamesList.length)*i}}  : {{answer?.answer}}</p>
+  </div>    </div>    </div></div>  </div>
+
+  <div *ngIf="studentFileListLength?.length>2" class="card mt-3" style="padding: 10px">
+    <div  class="card-header">List of submissions</div>
+    <div class="card-body" *ngFor="let file of studentFileDBList">
+      <h6 style="float: right">Student : {{file?.username}}</h6>
+      <form #marksSub="ngForm"  (ngSubmit)="submitFileMarks(marksSub)" >
+      <input style="float: right" placeholder="Marks" name="marks" ngModel>
+        <input hidden name="studentUsername" [ngModel]="file?.username">
+        <input hidden name="assignmentId" [ngModel]="AssignmentId">
+      <button [disabled]="!NotMarkedYet(file?.username+AssignmentId)" style="float: right" type="Submit" >Save</button>
+      </form>
+      <div > <h6>{{file.name}}</h6><p>  {{file.type}}</p></div><div ><button  (click)="downloadProvidedFiles(file.id,file.name,file.type)"> Download </button></div>
+      <legend style="padding: 6px"></legend>
+    </div>
+  </div>
+
+
+
+</div>
+{{stringfyassiment}}

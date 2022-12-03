@@ -13,17 +13,22 @@ import {HTTP_INTERCEPTORS, HttpClientModule} from "@angular/common/http";
 import { SuccessNoticeComponent } from './UserRegistraion/success-notice/success-notice.component';
 import { VerifiedNoticeComponent } from './UserRegistraion/verified-notice/verified-notice.component';
 import { FailedNoticeComponent } from './UserRegistraion/failed-notice/failed-notice.component';
-import {StudentDetailsComponent} from "./student-details/student-details.component";
+import {StudentDetailsComponent} from "./student-teacher-profile/student-details.component";
 import {AuthInterceptor} from "./JwtTokenSetup/_helpers/auth.interceptor";
 import {TeacherRegistrationComponent} from "./UserRegistraion/teacher-registration/teacher-registration.component";
 import {CreateSubjectComponent} from "./subjects/CreateSubject/create-subject.component";
 import {SubjectsComponent} from "./subjects/subjects.component";
 import {FileUploadModule} from "ng2-file-upload";
 import {NgxWebstorageModule} from "ngx-webstorage";
-import {FileUploadComponent} from "./subjects/file-upload/file-upload.component";
+import {FileUploadComponent} from "./subjects/Teacher-file-upload/file-upload.component";
 import {McqComponent} from "./subjects/mcq/mcq.component";
 import {CreateAssingementComponent} from "./subjects/create-assingement/create-assingement.component";
 import {SubjectsStudentViewComponent} from "./subjects/subjects-student-view/subjects-student-view.component";
+
+import {EssayQuestionComponent} from "./subjects/essay-question-creation/essay-question.component";
+import {GradingAnswersComponent} from "./subjects/grading-answers/grading-answers.component";
+import {StudentFileUploadComponent} from "./subjects/student-file-upload/student-file-upload.component";
+
 
 
 
@@ -41,7 +46,9 @@ const routes: Routes=[
   {path:'Teacher',component:TeacherRegistrationComponent},
   {path:'Subjects',component:SubjectsComponent},
   {path:'Subjects/create',component:CreateSubjectComponent},
-  {path:'Subject/view',component:SubjectsStudentViewComponent}
+  {path:'Subject/view',component:SubjectsStudentViewComponent},
+  {path:'Submissions',component:GradingAnswersComponent},
+
 
 
 
@@ -49,10 +56,10 @@ const routes: Routes=[
 ];
 
 @NgModule({
-  declarations: [StudRegComponent,LoginComponent, SuccessNoticeComponent, VerifiedNoticeComponent,FailedNoticeComponent,StudentDetailsComponent,TeacherRegistrationComponent,CreateSubjectComponent,SubjectsComponent,FileUploadComponent,McqComponent,CreateAssingementComponent,SubjectsStudentViewComponent,],
+  declarations: [StudRegComponent,LoginComponent, SuccessNoticeComponent, VerifiedNoticeComponent,FailedNoticeComponent,StudentDetailsComponent,TeacherRegistrationComponent,CreateSubjectComponent,SubjectsComponent,FileUploadComponent,McqComponent,CreateAssingementComponent,SubjectsStudentViewComponent,EssayQuestionComponent,GradingAnswersComponent,StudentFileUploadComponent],
   imports: [CommonModule, RouterModule.forRoot(routes), BrowserModule, FormsModule,HttpClientModule,
     ReactiveFormsModule,FileUploadModule,NgxWebstorageModule.forRoot(),],
 
-  exports: [RouterModule,StudRegComponent,LoginComponent,SuccessNoticeComponent,VerifiedNoticeComponent,FailedNoticeComponent,StudentDetailsComponent,TeacherRegistrationComponent,CreateSubjectComponent,SubjectsComponent,FileUploadComponent,McqComponent,CreateAssingementComponent,SubjectsStudentViewComponent,]
+  exports: [RouterModule,StudRegComponent,LoginComponent,SuccessNoticeComponent,VerifiedNoticeComponent,FailedNoticeComponent,StudentDetailsComponent,TeacherRegistrationComponent,CreateSubjectComponent,SubjectsComponent,FileUploadComponent,McqComponent,CreateAssingementComponent,SubjectsStudentViewComponent,EssayQuestionComponent,GradingAnswersComponent,StudentFileUploadComponent]
 })
 export class AppRoutingModule { }

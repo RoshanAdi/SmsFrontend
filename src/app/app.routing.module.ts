@@ -30,7 +30,6 @@ import {GradingAnswersComponent} from "./subjects/grading-answers/grading-answer
 import {StudentFileUploadComponent} from "./subjects/student-file-upload/student-file-upload.component";
 import {SubjectMarksComponent} from "./subject-marks/subject-marks.component";
 import {ReportComponent} from "./report/report.component";
-import {NgChartsModule} from "ng2-charts";
 
 
 
@@ -64,7 +63,7 @@ const routes: Routes=[
 @NgModule({
   declarations: [StudRegComponent,LoginComponent, SuccessNoticeComponent, VerifiedNoticeComponent,FailedNoticeComponent,StudentDetailsComponent,TeacherRegistrationComponent,CreateSubjectComponent,SubjectsComponent,FileUploadComponent,McqComponent,CreateAssingementComponent,SubjectsStudentViewComponent,EssayQuestionComponent,GradingAnswersComponent,StudentFileUploadComponent,SubjectMarksComponent,ReportComponent],
   imports: [CommonModule, RouterModule.forRoot(routes), BrowserModule, FormsModule, HttpClientModule,
-    ReactiveFormsModule, FileUploadModule, NgxWebstorageModule.forRoot(), NgChartsModule,],
+    ReactiveFormsModule, FileUploadModule, NgxWebstorageModule.forRoot(),],
 
   exports: [RouterModule,StudRegComponent,LoginComponent,SuccessNoticeComponent,VerifiedNoticeComponent,FailedNoticeComponent,StudentDetailsComponent,TeacherRegistrationComponent,CreateSubjectComponent,SubjectsComponent,FileUploadComponent,McqComponent,CreateAssingementComponent,SubjectsStudentViewComponent,EssayQuestionComponent,GradingAnswersComponent,StudentFileUploadComponent,SubjectMarksComponent,ReportComponent]
 })

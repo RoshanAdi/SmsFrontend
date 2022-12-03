@@ -1,0 +1,52 @@
+<div style="padding-top: 35px"></div>
+<div style="padding-left: 20px;padding-right: 20px" >
+
+  <div *ngIf="showSubjectList">
+    <h3 style="position: center">My Subjects</h3>
+    <div class="card md-4"  *ngFor="let obj of subjectList">
+      <div class="card-header">
+        <h5 class="card-title">{{obj?.subjectName}} <p style="float: right ;font-size: x-small; display: inline-block">Created by : {{obj?.createrFirstName}}</p> </h5>  </div>
+      <div class= card-body>
+        <p class="card-text">{{obj?.description}}.</p>
+        <button  (click)="LoadStudentsList(obj?.subjectId)"  class="btn btn-primary ">Add Marks</button> <!--stretched-link-->
+      </div>
+    </div>
+  </div>
+  <div *ngIf="showStudentList"><h3>{{CurrentSubject?.subjectName}}</h3>
+    <legend style="padding-bottom: 20px"></legend>
+    <form #MarksSub="ngForm" (ngSubmit)="submitMarks(MarksSub)">
+    <table class="table table-striped">
+      <thead>
+      <tr>
+        <th scope="col"> </th>
+        <th scope="col">Name</th>
+        <th scope="col">Email</th>
+        <th scope="col">Marks</th>
+      </tr>
+      </thead>
+      <tbody>
+
+      <tr *ngFor="let student of studentList;index as i">
+        <th scope="row">{{i+1}}</th>
+        <td>{{student?.fullName}}</td>
+        <td>{{student?.username}}</td>
+        <td><input type="text" placeholder="Marks" name="{{student?.username}}" ngModel></td>
+      </tr>
+
+      </tbody>
+    </table>
+     <div><input type="text" style="float: right" placeholder="Default : 100" name="totalMarks" ngModel><label style="float: right;padding-right: 15px;font-size: small">Out of :  </label>
+       </div><br><br>
+      <button  class="btn btn-primary" style="float: right" type="Submit">{{Save}}</button>
+    </form>
+
+<!--  <div class="card md-4"  *ngFor="let student of studentList">
+    <div class="card-header">
+      <h5 class="card-title">{{student?.fullName}} </h5>  </div>
+    <div class= card-body>
+      <p class="card-text">{{student?.username}}</p>
+</div>
+  </div>-->
+  </div>
+
+</div>

@@ -241,10 +241,10 @@ return CurrentTime >= Start && CurrentTime <= End
   public answerArray:any
 ;
   EssaySubmit(Answers:NgForm){
-    Object.entries(Answers.value).find(([key, value]) => {
+/*    Object.entries(Answers.value).find(([key, value]) => {
       console.error("key = "+key+" value = "+value)
 
-    });
+    });*/
 /*   this.newArray.push({essayAnswersList:Answers.value})*/
     clearInterval(this.interval);
 

@@ -28,6 +28,9 @@ import {SubjectsStudentViewComponent} from "./subjects/subjects-student-view/sub
 import {EssayQuestionComponent} from "./subjects/essay-question-creation/essay-question.component";
 import {GradingAnswersComponent} from "./subjects/grading-answers/grading-answers.component";
 import {StudentFileUploadComponent} from "./subjects/student-file-upload/student-file-upload.component";
+import {SubjectMarksComponent} from "./subject-marks/subject-marks.component";
+import {ReportComponent} from "./report/report.component";
+import {NgChartsModule} from "ng2-charts";
 
 
 
@@ -48,6 +51,9 @@ const routes: Routes=[
   {path:'Subjects/create',component:CreateSubjectComponent},
   {path:'Subject/view',component:SubjectsStudentViewComponent},
   {path:'Submissions',component:GradingAnswersComponent},
+  {path:'Subject/Marks',component:SubjectMarksComponent},
+  {path:'Reports',component:ReportComponent},
+
 
 
 
@@ -56,10 +62,10 @@ const routes: Routes=[
 ];
 
 @NgModule({
-  declarations: [StudRegComponent,LoginComponent, SuccessNoticeComponent, VerifiedNoticeComponent,FailedNoticeComponent,StudentDetailsComponent,TeacherRegistrationComponent,CreateSubjectComponent,SubjectsComponent,FileUploadComponent,McqComponent,CreateAssingementComponent,SubjectsStudentViewComponent,EssayQuestionComponent,GradingAnswersComponent,StudentFileUploadComponent],
-  imports: [CommonModule, RouterModule.forRoot(routes), BrowserModule, FormsModule,HttpClientModule,
-    ReactiveFormsModule,FileUploadModule,NgxWebstorageModule.forRoot(),],
+  declarations: [StudRegComponent,LoginComponent, SuccessNoticeComponent, VerifiedNoticeComponent,FailedNoticeComponent,StudentDetailsComponent,TeacherRegistrationComponent,CreateSubjectComponent,SubjectsComponent,FileUploadComponent,McqComponent,CreateAssingementComponent,SubjectsStudentViewComponent,EssayQuestionComponent,GradingAnswersComponent,StudentFileUploadComponent,SubjectMarksComponent,ReportComponent],
+  imports: [CommonModule, RouterModule.forRoot(routes), BrowserModule, FormsModule, HttpClientModule,
+    ReactiveFormsModule, FileUploadModule, NgxWebstorageModule.forRoot(), NgChartsModule,],
 
-  exports: [RouterModule,StudRegComponent,LoginComponent,SuccessNoticeComponent,VerifiedNoticeComponent,FailedNoticeComponent,StudentDetailsComponent,TeacherRegistrationComponent,CreateSubjectComponent,SubjectsComponent,FileUploadComponent,McqComponent,CreateAssingementComponent,SubjectsStudentViewComponent,EssayQuestionComponent,GradingAnswersComponent,StudentFileUploadComponent]
+  exports: [RouterModule,StudRegComponent,LoginComponent,SuccessNoticeComponent,VerifiedNoticeComponent,FailedNoticeComponent,StudentDetailsComponent,TeacherRegistrationComponent,CreateSubjectComponent,SubjectsComponent,FileUploadComponent,McqComponent,CreateAssingementComponent,SubjectsStudentViewComponent,EssayQuestionComponent,GradingAnswersComponent,StudentFileUploadComponent,SubjectMarksComponent,ReportComponent]
 })
 export class AppRoutingModule { }

@@ -29,7 +29,7 @@ export class GradingAnswersComponent implements OnInit {
   public counter:number=1
   public Save:string="Save"
   private blob: any;
-  public assignment: any;
+public showUpdateButton:boolean =false
   public savedFiles: any;
   public fileLength: any;
   public studentFileDBList: any;
@@ -63,31 +63,27 @@ export class GradingAnswersComponent implements OnInit {
     this.showSelectedSubject = true;
     this.subjectId = id;
   }
-public answer:any[]=[]
 
   public stringifyanswer:any
-  public stringfyAssi:any
+
 public stringfyassiment:any
   ShowSubmissions(assigmentID:number){
 
     this.http
       .get("http://localhost:8089/Assignment/"+assigmentID)
       .subscribe(response=> {
-        this.assignment = JSON.parse(JSON.stringify(response));
+        this.Assignment = JSON.parse(JSON.stringify(response));
+
         this.stringfyassiment = JSON.stringify(response)
-        this.savedFiles = this.assignment.fileDBList;
+        this.savedFiles = this.Assignment.fileDBList;
         this.fileLength = JSON.stringify(this.savedFiles)
 
-        this.studentFileDBList=this.assignment?.studentFileDBList
+        this.studentFileDBList=this.Assignment?.studentFileDBList
         this.studentFileListLength = JSON.stringify( this.studentFileDBList)
+        this.calTotalMarks()
       })
 
-    this.http
-      .get("http://localhost:8089/Assignment/"+assigmentID)
-      .subscribe(response=> {
-        this.Assignment = JSON.parse(JSON.stringify(response));
-this.stringfyAssi = JSON.stringify(response)
-      })
+
 
     this.http
       .get("http://localhost:8089/EssayAnswers/"+assigmentID)
@@ -116,10 +112,12 @@ this.stringfyAssi = JSON.stringify(response)
           dic.set(value?.username,value?.id)
         })
         this.usernamesList = Array.from(dic.keys())
-        this.calTotalMarks()
+
+
       }
 
   submitMarks(Marks:NgForm){
+    this.showUpdateButton=true
     this.Save="Update"
     this.http.post('http://localhost:8089/marks/EssayQuestions/'+this.marks,Marks.value)
       .subscribe((result) => {
@@ -130,33 +128,34 @@ this.stringfyAssi = JSON.stringify(response)
 
 
   calTotalMarks(){
-    let essayList:any[]=[]
+    let essayList:JSON
     essayList = this.Assignment?.essayList
+    console.error("essya list value = "+essayList)
     Object.entries(essayList).forEach(([key, value], index) => {
 
 
 
       this.marks = Number(value?.marks)+Number(this.marks)
     })
-    console.error(this.marks)
+    console.warn("marks total = "+this.marks)
 
 
     /*this.marks=Number(marks)+Number(this.marks)*/
   }
-
-  NotMarkedYet(marksupdateId :String){
-
-    let marksSet:any[]=[]
+  element: any;
+  saveButtonDisable(username:String){
+var counter = 0
+    let marksSet:JSON
     marksSet= this.Assignment?.marksSet
-    for (var i = 0; i < marksSet.length; i++) {
-      if (marksSet[i]?.marksupdateId ==marksupdateId)
-        break;
-      else { if (marksSet.length-1==i){return true}
-
-      }
+    if(marksSet!=null||undefined) {
+      Object.entries(marksSet).forEach(([key, value], index) => {
+        if (value?.marksupdateId == (username + this.AssignmentId) && value?.marks == null) {
+          counter = counter + 1
+        }
+      })
+      return counter == 0;
     }
-this.Save = "Graded!"
-return false;
+    else return true
   }
   finishGrading(){
     window.location.reload()
@@ -180,6 +179,7 @@ return false;
   }
 
   submitFileMarks(marks:NgForm){
+    this.showUpdateButton=true
     this.http.post('http://localhost:8089/marks/File/100',marks.value)
       .subscribe((result) => {
 

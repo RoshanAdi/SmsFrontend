@@ -2,7 +2,7 @@
 <div style="padding-left: 20px;padding-right: 20px" >
 
   <div *ngIf="showSubjectList">
-<h3 style="position: center">My Subjects With Active Assignments</h3>
+<h3 style="position: center">My Subjects</h3>
   <div class="card md-4"  *ngFor="let obj of subjectList">
     <div class="card-header">
       <h5 class="card-title">{{obj?.subjectName}} <p style="float: right ;font-size: x-small; display: inline-block">Created by : {{obj?.createrFirstName}}</p> </h5>  </div>
@@ -50,8 +50,8 @@
         <form #MarksSub="ngForm" (ngSubmit)="submitMarks(MarksSub)">
       <div class="card-header" ><h6 style="display: inline-block" >{{i+1}}. Student : {{username}}</h6>
          <input style="display: inline-block;float: right" type="text" name="marks" placeholder="Total Marks" ngModel>
-        <p style="padding-right: 15px;display: inline-block;float: right"></p><button [disabled]="!NotMarkedYet(usernamesList[i]+AssignmentId)" class="btn btn-primary" style="display: inline-block;float: right" type="Submit">Save</button>
-        <input hidden name="studentUsername"  [ngModel]="username">
+        <p style="padding-right: 15px;display: inline-block;float: right"></p><button *ngIf="!showUpdateButton" [hidden]="saveButtonDisable(usernamesList[i])" id="one" class="btn btn-primary" style="display: inline-block;float: right" type="Submit">Save</button><button *ngIf="!showUpdateButton" [hidden]="!saveButtonDisable(usernamesList[i])"  class="btn btn-primary" style="display: inline-block;float: right" type="Submit">Update</button><button *ngIf="showUpdateButton"  class="btn btn-primary" style="display: inline-block;float: right" type="Submit">Update</button>
+        <input hidden name="studentUsername"  [ngModel]="username">      <!--make this button disable-->
         <input hidden name="assignmentId"  [ngModel]="AssignmentId">
         <input hidden name="marksupdateId"  [ngModel]="username+AssignmentId">
       </div>
@@ -71,7 +71,7 @@
       <input style="float: right" placeholder="Marks" name="marks" ngModel>
         <input hidden name="studentUsername" [ngModel]="file?.username">
         <input hidden name="assignmentId" [ngModel]="AssignmentId">
-      <button [disabled]="!NotMarkedYet(file?.username+AssignmentId)" style="float: right" type="Submit" >Save</button>
+        <button *ngIf="!showUpdateButton" [hidden]="saveButtonDisable(file?.username)"  class="btn btn-primary" style="display: inline-block;float: right" type="Submit">Save</button><button *ngIf="!showUpdateButton" [hidden]="!saveButtonDisable(file?.username)"  class="btn btn-primary" style="display: inline-block;float: right" type="Submit">Update</button><button *ngIf="showUpdateButton"  class="btn btn-primary" style="display: inline-block;float: right" type="Submit">Update</button> <!--// removed disable function-->
       </form>
       <div > <h6>{{file.name}}</h6><p>  {{file.type}}</p></div><div ><button  (click)="downloadProvidedFiles(file.id,file.name,file.type)"> Download </button></div>
       <legend style="padding: 6px"></legend>
@@ -81,4 +81,4 @@
 
 
 </div>
-{{stringfyassiment}}
+

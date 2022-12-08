@@ -58,12 +58,17 @@ export class SubjectsStudentViewComponent implements OnInit {
       .subscribe(response=> {
         this.currentName = JSON.stringify(response);
         this.CurrentNameObj = JSON.parse(this.currentName);
+        console.error(this.currentName)/*{this.CurrentNameObj.push(["subjects","null"])}*/
+        if (this.CurrentNameObj.subjects==null){this.subjects.push("subjectId","null");this.StudentSubjects()}
+        else {
         this.subjects = this.CurrentNameObj.subjects
-        this.StudentSubjects()
+        this.StudentSubjects()}
       });
 
   }
   StudentSubjects(){
+    console.error(JSON.stringify(this.subjects))
+
     Object.entries(this.subjects).forEach(([key, value], index) => {
       Object.entries(value).forEach(([key, value], index) => {
         if(key=="subjectId"){this.StudentEnrolledSubjects.push(value)}});});

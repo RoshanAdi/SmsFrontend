@@ -1,0 +1,21 @@
+<canvas baseChart class="chart"
+        [data]="pieChartData"
+        [type]="pieChartType"
+        [options]="pieChartOptions"
+        [plugins]="pieChartPlugins">
+</canvas>
+
+<canvas baseChart class="chart"
+        [data]="lineChartData"
+        [options]="lineChartOptions"
+        [type]="lineChartType"
+        (chartHover)="chartHoveredd($event)"
+        (chartClick)="chartClickedd($event)"></canvas>
+<table>
+  <tr>
+    <th *ngFor="let label of lineChartData.labels">{{label}}</th>
+  </tr>
+  <tr *ngFor="let d of lineChartData.datasets; let i=index" [class]="'line-'+i">
+    <td *ngFor="let label of lineChartData.labels; let j=index">{{d && d.data[j]}}</td>
+  </tr>
+</table>

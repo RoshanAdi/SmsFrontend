@@ -40,9 +40,7 @@ export class SubjectMarksComponent implements OnInit {
     this.http
       .get("http://localhost:8089/Subject/SubjectMarks/"+subjectId)
       .subscribe(response=> {
-        this.CurrentSubject = JSON.parse(JSON.stringify(response));
-this.studentList=JSON.parse(JSON.stringify(response))?.students;
-      })
+this.studentList=JSON.parse(JSON.stringify(response)  )    })
   }
 
   submitMarks(Marks:NgForm){

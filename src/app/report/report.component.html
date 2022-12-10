@@ -1,21 +1,112 @@
-<canvas baseChart class="chart"
-        [data]="pieChartData"
-        [type]="pieChartType"
-        [options]="pieChartOptions"
-        [plugins]="pieChartPlugins">
-</canvas>
+<div style="padding-top: 35px"></div>
+<div style="padding-left: 20px;padding-right: 20px" >
 
-<canvas baseChart class="chart"
-        [data]="lineChartData"
-        [options]="lineChartOptions"
-        [type]="lineChartType"
-        (chartHover)="chartHoveredd($event)"
-        (chartClick)="chartClickedd($event)"></canvas>
-<table>
-  <tr>
-    <th *ngFor="let label of lineChartData.labels">{{label}}</th>
-  </tr>
-  <tr *ngFor="let d of lineChartData.datasets; let i=index" [class]="'line-'+i">
-    <td *ngFor="let label of lineChartData.labels; let j=index">{{d && d.data[j]}}</td>
-  </tr>
-</table>
+  <div>
+<h3 >Select the Subject</h3>
+
+  <select (ngModelChange)="showReport($event)"  [(ngModel)]="Report" style=" font-size: 15px;width: 50%" >
+
+    <option *ngFor=" let report of reportList; index as i" value="{{i}}">{{report?.subjectName}}</option>
+  </select>
+  </div>
+<div style="padding: 14px"></div>
+  <div *ngIf="showStatics" class="row gutters-sm" >
+    <div class="col-md-6 mb-3">
+      <div class="card">
+        <div class="card-body">
+          <div class="mt-3">
+            <table class="table table-striped">
+              <thead>
+              <tr>
+                <th scope="col"> </th>
+                <th scope="col">Name</th>
+                <th scope="col">Email</th>
+                <th scope="col">Marks</th>
+                <th scope="col">Rank</th>
+              </tr>
+              </thead>
+              <tbody>
+
+              <tr *ngFor="let marks of MarksList;index as i">
+                <th scope="row">{{i+1}}</th>
+                <td>{{marks?.studentName}}</td>
+                <td>{{marks?.studentUsername}}</td>
+                <td>{{marks?.marks}}</td>
+                <td>{{marks?.studRank}}</td>
+              </tr>
+
+              </tbody>
+            </table>
+
+
+
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-6 mb-3">
+      <div class="card">
+        <div class="card-body">
+          <div class="mt-3">
+            <h6>Marks out of             :{{CurrentReport?.outOf}}</h6>
+            <h6>Total no.of participants :{{CurrentReport?.totalParticipants}}</h6>
+            <h6>Average Marks            :{{CurrentReport?.averageMarks}}</h6>
+          </div>
+        </div>
+      </div>
+      <div style="padding: 8px"></div>
+      <div class="card">
+        <div class="card-body">
+           <div class="mt-3">
+             <div >
+               <canvas baseChart class="chart"
+                       [data]="pieChartData"
+                       [type]="pieChartType"
+                       [options]="pieChartOptions"
+                       [plugins]="pieChartPlugins">
+               </canvas>
+
+
+             </div>
+            </div>
+          </div>
+        </div>
+
+
+
+    </div>
+<!--    <div class="col-md-4 mb-3">
+      <div class="card">
+        <div class="card-body">
+          <div class="mt-3">
+            <canvas baseChart class="chart"
+                    [data]="lineChartData"
+                    [options]="lineChartOptions"
+                    [type]="lineChartType"
+                    (chartHover)="chartHoveredd($event)"
+                    (chartClick)="chartClickedd($event)"></canvas>
+            <table>
+              <tr>
+                <th *ngFor="let label of lineChartData.labels">{{label}}</th>
+              </tr>
+              <tr *ngFor="let d of lineChartData.datasets; let i=index" [class]="'line-'+i">
+                <td *ngFor="let label of lineChartData.labels; let j=index">{{d && d.data[j]}}</td>
+              </tr>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>-->
+
+
+
+    </div>
+
+
+
+
+
+
+
+
+</div>

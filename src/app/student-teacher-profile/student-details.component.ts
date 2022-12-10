@@ -38,7 +38,7 @@ userDetails:any
 public StudentUser = false
   public TeacherUser = false
   currentUser: any;
-
+public marksString:any
 
 
   ngOnInit(): void { console.log("printing the username found from token = "+this.userNameService.getUserName())
@@ -66,6 +66,7 @@ public StudentUser = false
         this.nIc = this.myObj.nIc
         this.subjects=this.myObj.subjects
         this.marks = this.myObj.marks
+        this.marksString = JSON.stringify(this.marks)
               console.log("Printing student = "+this.myObj.firstName)    });
 
 if (Role.slice(5, )=='Student'){

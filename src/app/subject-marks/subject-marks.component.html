@@ -14,7 +14,7 @@
   </div>
   <div *ngIf="showStudentList"><h3>{{CurrentSubject?.subjectName}}</h3>
     <legend style="padding-bottom: 20px"></legend>
-    <form #MarksSub="ngForm" (ngSubmit)="submitMarks(MarksSub)">
+    <form #MarksSub="ngForm" (ngSubmit)="submitMarks(MarksSub)" ngNativeValidate>
     <table class="table table-striped">
       <thead>
       <tr>
@@ -30,16 +30,16 @@
         <th scope="row">{{i+1}}</th>
         <td>{{student?.fullName}}</td>
         <td>{{student?.username}}</td>
-        <td><input type="text" placeholder="Marks" name="{{student?.username}}" ngModel></td>
+        <td><input type="text" pattern="[0-9]*" placeholder="Marks" name="{{student?.username}}" ngModel required></td>
       </tr>
 
       </tbody>
     </table>
-     <div><input type="text" style="float: right" placeholder="Default : 100" name="totalMarks" ngModel><label style="float: right;padding-right: 15px;font-size: small">Out of :  </label>
+     <div><input type="text" pattern="[0-9]*" style="float: right" name="totalMarks" ngModel required><label style="float: right;padding-right: 15px;font-size: small">Out of :  </label>
        </div><br><br>
       <button  class="btn btn-primary" style="float: right" type="Submit">{{Save}}</button>
     </form>
-
+<p> Note : Please put 0 marks for absent students</p>
 
   </div>
 

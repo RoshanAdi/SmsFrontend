@@ -5,8 +5,8 @@
   <div style="display: inline-block" *ngIf="!showMcqCreate" > <div  (click)="loadCreateAssi()" class="btn btn-primary" *ngIf="showAddAssignmentButton">Add a new assignment</div></div></div>
 
   <div *ngIf="showSubjectList">
-
-<div class="card md-4"  *ngFor="let obj of myObj">
+<div  *ngFor="let obj of myObj">
+<div class="card md-4" >
   <div class="card-header">
     <h5 class="card-title">{{obj?.subjectName}} <p style="float: right ;font-size: x-small; display: inline-block">Created by : {{obj?.createrFirstName}}</p> </h5>  </div>
     <div class= card-body>
@@ -16,7 +16,7 @@
       <button *ngIf="EnrollButton(obj?.subjectId)"  style="float: right" (click)="EnrollTeacher(obj?.subjectId)">Become a Teacher</button>
     <button [disabled]="checkTeacher(obj?.createdBy,obj?.subjectId)" (click)="loadSubject(obj?.subjectId)"  class="btn btn-primary ">Manage</button> <!--stretched-link-->
     </div>
-
+</div><div style="padding: 6px"></div>
 </div>
 </div>
 

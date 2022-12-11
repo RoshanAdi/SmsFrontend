@@ -98,7 +98,7 @@ private  counter:number = 0;
 
 
 
-  /*public lineChartData: ChartConfiguration['data'] = {
+  public lineChartData: ChartConfiguration['data'] = {
     datasets: [
       {
         data: this.Data1,
@@ -111,7 +111,7 @@ private  counter:number = 0;
         pointHoverBorderColor: 'rgba(148,159,177,0.8)',
         fill: 'origin',
       } ],
-    labels: [ '20', '40', '60', '80', '100' ]
+    labels: [ '15', '42.5', '60', '70', '87.5' ]
   };
 
   public lineChartOptions: ChartConfiguration['options'] = {
@@ -175,6 +175,6 @@ private  counter:number = 0;
 
   public chartHoveredd({ event, active }: { event?: ChartEvent, active?: {}[] }): void {
     console.log(event, active);
-  }*/
+  }
 
 }

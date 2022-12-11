@@ -48,9 +48,24 @@
       <div class="card">
         <div class="card-body">
           <div class="mt-3">
-            <h6>Marks out of             :{{CurrentReport?.outOf}}</h6>
-            <h6>Total no.of participants :{{CurrentReport?.totalParticipants}}</h6>
-            <h6>Average Marks            :{{CurrentReport?.averageMarks}}</h6>
+            <table class="table table-striped">
+              <thead>
+              <tr>
+                <th scope="row">Marks out of </th>
+                <th scope="row">Total no.of participants</th>
+                <th scope="row">Average Marks</th>
+              </tr>
+              </thead>
+              <tbody>
+
+              <tr >
+                <td >{{CurrentReport?.outOf}}</td>
+                <td>{{CurrentReport?.totalParticipants}}</td>
+                <td>{{CurrentReport?.averageMarks}}%</td>
+              </tr>
+
+              </tbody>
+            </table>
           </div>
         </div>
       </div>
@@ -65,17 +80,11 @@
                        [options]="pieChartOptions"
                        [plugins]="pieChartPlugins">
                </canvas>
-
-
              </div>
             </div>
           </div>
         </div>
-
-
-
-    </div>
-<!--    <div class="col-md-4 mb-3">
+      <div style="padding: 8px"></div>
       <div class="card">
         <div class="card-body">
           <div class="mt-3">
@@ -85,28 +94,9 @@
                     [type]="lineChartType"
                     (chartHover)="chartHoveredd($event)"
                     (chartClick)="chartClickedd($event)"></canvas>
-            <table>
-              <tr>
-                <th *ngFor="let label of lineChartData.labels">{{label}}</th>
-              </tr>
-              <tr *ngFor="let d of lineChartData.datasets; let i=index" [class]="'line-'+i">
-                <td *ngFor="let label of lineChartData.labels; let j=index">{{d && d.data[j]}}</td>
-              </tr>
-            </table>
           </div>
         </div>
       </div>
-    </div>-->
-
-
-
     </div>
-
-
-
-
-
-
-
-
+    </div>
 </div>

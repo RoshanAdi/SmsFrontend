@@ -27,13 +27,13 @@ Teacher creates essay-type questions
 
 Teacher uploads files
 
-Student answer MCQ
+Student answers MCQ
 
-Student answer essay questions
+Student answers essay questions
 
-Teacher grade essay questions
+Teacher grades essay questions
 
-Student upload answers
+Student uploads answers
 
 No.of attempts limitations
 
@@ -49,6 +49,6 @@ Teacher adds final marks for the enrolled list of students
 
 Rank and average calculation
 
-Chats for marks distribution
+Chart of marks distribution
 
 Back end - Angular Repository - https://github.com/RoshanAdi/SmsBackEnd

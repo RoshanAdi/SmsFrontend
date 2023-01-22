@@ -1,27 +1,53 @@
 # SmsFrontend
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 14.2.1.
+This application has been developed to manage the assignment activities of a school with role-based authentication. Currently, student, teacher are the active roles and upon email verification, they can register with their school email addresses.
 
-## Development server
+The following list of features has been added to the application
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+Registration form validation
 
-## Code scaffolding
+jwt authentication token
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+Email verification via SMTP
 
-## Build
+Teacher/Student profile
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+Teacher subject create
 
-## Running unit tests
+Student/Teacher subject enrolling
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+Display enrolled subjects on the profile
 
-## Running end-to-end tests
+Teacher assignment create
 
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
+Teacher creates MCQ
 
-## Further help
+Teacher creates essay-type questions
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+Teacher uploads files
+
+Student answer MCQ
+
+Student answer essay questions
+
+Teacher grade essay questions
+
+Student upload answers
+
+No.of attempts limitations
+
+Answer on the given date/given time
+
+Auto submission at the end of the time
+
+Auto grading for MCQs
+
+Display assignment marks on each one's profiles
+
+Teacher adds final marks for the enrolled list of students
+
+Rank and average calculation
+
+Chats for marks distribution
+
+Back end - Angular Repository - https://github.com/RoshanAdi/SmsBackEnd

@@ -1,4 +1,5 @@
 # SmsFrontend
+A School Management System-FrontEnd-Angular
 
 This application has been developed to manage the assignment activities of a school with role-based authentication. Currently, student, teacher are the active roles and upon email verification, they can register with their school email addresses.
 

@@ -12,6 +12,7 @@ import {Router} from "@angular/router";
   styleUrls: ['./subjects-student-view.component.css']
 })
 export class SubjectsStudentViewComponent implements OnInit {
+  public URL:string="http://localhost:8089/"
   public CurrentSubject : any;
   public subjectList : any;
   public showSubjectList: boolean = true;
@@ -43,7 +44,7 @@ export class SubjectsStudentViewComponent implements OnInit {
   constructor(private router: Router,private http:HttpClient,private userNameService: UsernameService,@Inject(LOCALE_ID) private locale: string) { }
 
   ngOnInit(): void {this.http
-    .get("http://localhost:8089/Subject/List")
+    .get(this.URL+"Subject/List")
     .subscribe(response => {
       this.subjectList = JSON.parse(JSON.stringify(response));
 
@@ -54,16 +55,21 @@ export class SubjectsStudentViewComponent implements OnInit {
     this.username = this.userNameService.getUserName()
     localStorage.setItem("username",this.username)
     this.http
-      .get("http://localhost:8089/Student/Subjects/"+this.username)
+      .get(this.URL+"Student/Subjects/"+this.username)
       .subscribe(response=> {
         this.currentName = JSON.stringify(response);
         this.CurrentNameObj = JSON.parse(this.currentName);
+        console.error(this.currentName)/*{this.CurrentNameObj.push(["subjects","null"])}*/
+        if (this.CurrentNameObj.subjects==null){this.subjects.push("subjectId","null");this.StudentSubjects()}
+        else {
         this.subjects = this.CurrentNameObj.subjects
-        this.StudentSubjects()
+        this.StudentSubjects()}
       });
 
   }
   StudentSubjects(){
+    console.error(JSON.stringify(this.subjects))
+
     Object.entries(this.subjects).forEach(([key, value], index) => {
       Object.entries(value).forEach(([key, value], index) => {
         if(key=="subjectId"){this.StudentEnrolledSubjects.push(value)}});});
@@ -74,7 +80,7 @@ export class SubjectsStudentViewComponent implements OnInit {
     else {return true}
   }
   EnrollStudent(id:number){
-    this.http.put('http://localhost:8089/Student/Enroll/'+id,id)
+    this.http.put(this.URL+'Student/Enroll/'+id,id)
       .subscribe((result) => {
 
       })
@@ -83,7 +89,7 @@ export class SubjectsStudentViewComponent implements OnInit {
 
   loadSubject(id: any){
     this.http
-      .get("http://localhost:8089/Subject/"+id)
+      .get(this.URL+"Subject/"+id)
       .subscribe(response=> {
         this.CurrentSubject = JSON.parse(JSON.stringify(response));
 
@@ -110,7 +116,7 @@ export class SubjectsStudentViewComponent implements OnInit {
 
     this.LoadEssay()
     this.http
-      .get("http://localhost:8089/Assignment/"+assigmentID)
+      .get(this.URL+"Assignment/"+assigmentID)
       .subscribe(response=> {
                this.assignment4Mcq = JSON.parse(JSON.stringify(response));
         this.savedFiles = this.assignment4Mcq.fileDBList;
@@ -124,7 +130,7 @@ this.startTimer()
       })
 
     this.http
-      .get("http://localhost:8089/marks/"+this.username+assigmentID.toString())
+      .get(this.URL+"marks/"+this.username+assigmentID.toString())
       .subscribe(response=> {
         if(response==null){this.showSelectedSubject =false
           this.showAssignmentContent = true
@@ -146,7 +152,7 @@ this.startTimer()
 
   downloadFiles(id: string, fileName: string, fileType: string) {
     this.http
-      .get<Blob>("http://localhost:8089/files/download/" + id, {responseType: 'blob' as 'json'})
+      .get<Blob>(this.URL+"files/download/" + id, {responseType: 'blob' as 'json'})
       .subscribe((data) => {
 
         this.blob = new Blob([data], {type: fileType});
@@ -178,7 +184,7 @@ this.startTimer()
         });});});
     this.MarksArray = {"marks":this.marks.toString()+"/"+this.mcqList.length.toString(),"marksupdateId":this.username+this.AssignmentId}
 /*    localStorage.setItem("marks",this.marks.toString()+"/"+this.mcqList.length.toString() )*/
-    this.http.put('http://localhost:8089/marks/'+this.AssignmentId+'/'+this.username,this.MarksArray)
+    this.http.put(this.URL+'marks/'+this.AssignmentId+'/'+this.username,this.MarksArray)
       .subscribe((result) => {
 
       })
@@ -228,7 +234,7 @@ return CurrentTime >= Start && CurrentTime <= End
  LoadEssay() {
 
     this.http
-      .get("http://localhost:8089/EssayQuestions/"+this.AssignmentId)
+      .get(this.URL+"EssayQuestions/"+this.AssignmentId)
       .subscribe(response => {
         this.QuestionsList = JSON.stringify(response);
         this.questionsList = JSON.parse(this.QuestionsList);
@@ -254,7 +260,7 @@ this.answerArray=JSON.parse(JSON.stringify(Answers.value))
     console.error("json string = "+JSON.stringify(this.answerArray))
     console.error(this.username)
     this.http
-      .post("http://localhost:8089/EssayQuestions/answerSubmit/"+this.AssignmentId+'/'+this.username,JSON.stringify(this.answerArray))
+      .post(this.URL+"EssayQuestions/answerSubmit/"+this.AssignmentId+'/'+this.username,JSON.stringify(this.answerArray))
       .subscribe(response => {
 
       })

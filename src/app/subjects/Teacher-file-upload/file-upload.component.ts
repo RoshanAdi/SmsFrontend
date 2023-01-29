@@ -11,7 +11,7 @@ import {SubjectsComponent} from "../subjects.component";
 })
 
 export class FileUploadComponent implements OnInit {
-
+  public URL:string="http://localhost:8089/"
   selectedFiles?: FileList;
   progressInfos: any[] = [];
   message: string[] = [];
@@ -70,7 +70,7 @@ export class FileUploadComponent implements OnInit {
   }
   ShowUploadedFiles() {
     this.http
-      .get("http://localhost:8089/Assignment/" + localStorage.getItem("AssiId"))
+      .get(this.URL+"Assignment/" + localStorage.getItem("AssiId"))
       .subscribe((data) => {
         this.savedFiles = JSON.parse(JSON.stringify(data)).fileDBList;
       });
@@ -79,7 +79,7 @@ export class FileUploadComponent implements OnInit {
 
   downloadFile(id: string, fileName: string, fileType: string) {
     this.http
-      .get<Blob>("http://localhost:8089/files/download/" + id, {responseType: 'blob' as 'json'})
+      .get<Blob>(this.URL+"files/download/" + id, {responseType: 'blob' as 'json'})
       .subscribe((data) => {
 
         this.blob = new Blob([data], {type: fileType});

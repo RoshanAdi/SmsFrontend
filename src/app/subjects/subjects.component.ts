@@ -12,6 +12,7 @@ const USER_KEY = 'auth-user';
   styleUrls: ['./subjects.component.css']
 })
 export class SubjectsComponent implements OnInit {
+  public URL:string="http://localhost:8089/"
  public name: any;
   public myObj: any;
   public name1: any;
@@ -51,7 +52,7 @@ public fileDBList:any[]=[]
 
   ngOnInit(): void {
     this.http
-      .get("http://localhost:8089/Subject/List")
+      .get(this.URL+"Subject/List")
       .subscribe(response => {
         this.name = JSON.stringify(response);
         this.myObj = JSON.parse(this.name);
@@ -65,7 +66,7 @@ public fileDBList:any[]=[]
     let Role = String(this.currentUser.roles)
     this.username = this.userNameService.getUserName()
     this.http
-      .get("http://localhost:8089/"+Role.slice(5, )+"/"+this.username)
+      .get(this.URL+Role.slice(5, )+"/"+this.username)
       .subscribe(response=> {
         this.currentName = JSON.stringify(response);
         this.CurrentNameObj = JSON.parse(this.currentName);
@@ -79,7 +80,7 @@ public fileDBList:any[]=[]
 
 loadSubject(id: any){
   this.http
-    .get("http://localhost:8089/Subject/"+id)
+    .get(this.URL+"Subject/"+id)
     .subscribe(response=> {
       this.name1 = JSON.stringify(response);
       this.myObj1 = JSON.parse(this.name1);
@@ -104,7 +105,7 @@ loadSubject(id: any){
  }
   editSub(data : NgForm){
 
-    this.http.put('http://localhost:8089/Subject/edit/'+this.subjectId, data)
+    this.http.put(this.URL+'Subject/edit/'+this.subjectId, data)
       .subscribe((result) => {
         console.warn("result", result)
       })
@@ -115,7 +116,7 @@ loadSubject(id: any){
     this.showUpdateInputField = true;
   }
   editAssi(data: NgForm){
-    this.http.put('http://localhost:8089/Assignment/edit/'+this.currentAssignmentId, data)
+    this.http.put(this.URL+'Assignment/edit/'+this.currentAssignmentId, data)
       .subscribe((result) => {
         console.warn("result", result)
       })
@@ -124,7 +125,7 @@ loadSubject(id: any){
 
   }
   deleteAssi(id:number){
-    this.http.delete('http://localhost:8089/Assignment/delete/'+id)
+    this.http.delete(this.URL+'Assignment/delete/'+id)
       .subscribe((result) => {
         console.warn("result", result)
       })
@@ -132,7 +133,7 @@ loadSubject(id: any){
 
   }
   deleteSub(id:number){
-    this.http.delete('http://localhost:8089/Subject/delete/'+id)
+    this.http.delete(this.URL+'Subject/delete/'+id)
       .subscribe((result) => {
         console.warn("result", result)
       })
@@ -170,7 +171,7 @@ loadSubject(id: any){
 
   }
   EnrollTeacher(id:number){
-    this.http.put('http://localhost:8089/Teacher/Enroll/'+id,id)
+    this.http.put(this.URL+'Teacher/Enroll/'+id,id)
       .subscribe((result) => {
         console.warn("result", result)
 

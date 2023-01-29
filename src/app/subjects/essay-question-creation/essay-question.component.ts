@@ -8,6 +8,7 @@ import {HttpClient} from "@angular/common/http";
   styleUrls: ['./essay-question.component.css']
 })
 export class EssayQuestionComponent implements OnInit {
+  public URL:string="http://localhost:8089/"
   public QuestionsList: any;
   public questionsList: any;
   public popQuestion: any;
@@ -19,7 +20,7 @@ export class EssayQuestionComponent implements OnInit {
   submitQuestions(questions:NgForm){
     if (JSON.stringify(questions.value).length>30){
       console.warn(JSON.stringify(questions.value).length)
-    this.http.post('http://localhost:8089/EssayQuestion/create/'+localStorage.getItem("AssiId"), questions.value)
+    this.http.post(this.URL+'EssayQuestion/create/'+localStorage.getItem("AssiId"), questions.value)
       .subscribe((result) => {
       })
     this.reset(questions)}
@@ -33,7 +34,7 @@ export class EssayQuestionComponent implements OnInit {
   LoadEssay(){
     for (let i = 0; i < 2; i++){   //this is to overcome updating delay after deletion
     this.http
-      .get("http://localhost:8089/EssayQuestions/"+localStorage.getItem("AssiId"))
+      .get(this.URL+"EssayQuestions/"+localStorage.getItem("AssiId"))
       .subscribe(response=> {
         this.QuestionsList = JSON.stringify(response);
         this.questionsList = JSON.parse(this.QuestionsList);
@@ -44,7 +45,7 @@ export class EssayQuestionComponent implements OnInit {
   }
 
   DeleteQuestion(id:number,index:number){
-    this.http.delete('http://localhost:8089/EssayQuestions/delete/'+id)
+    this.http.delete(this.URL+'EssayQuestions/delete/'+id)
       .subscribe((result) => {
         this.popQuestion = index
       })

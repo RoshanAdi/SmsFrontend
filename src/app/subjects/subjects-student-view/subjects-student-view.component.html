@@ -2,8 +2,8 @@
 <div style="padding-left: 20px;padding-right: 20px" >
   <button (click)="reload()" class="btn btn-primary" *ngIf="showSelectedSubject">Select a different subject</button>
 <div *ngIf="showSubjectList">
-
-  <div class="card md-4"  *ngFor="let obj of subjectList">
+<div *ngFor="let obj of subjectList">
+  <div class="card md-4" >
     <div class="card-header">
       <h5 class="card-title">{{obj?.subjectName}} <p style="float: right ;font-size: x-small; display: inline-block">Created by : {{obj?.createrFirstName}}</p> </h5>  </div>
     <div class= card-body>
@@ -13,8 +13,8 @@
      <button *ngIf="EnrollButton(obj?.subjectId)"  style="float: right" (click)="EnrollStudent(obj?.subjectId)">Enroll</button>
       <button [disabled]="checkStud(obj?.subjectId)" (click)="loadSubject(obj?.subjectId)"  class="btn btn-primary ">View</button> <!--stretched-link-->
     </div>
-
-  </div></div>
+  </div><div style="padding: 6px"></div>
+</div></div>
 
   <div *ngIf="showSelectedSubject">
 

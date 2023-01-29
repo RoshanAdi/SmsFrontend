@@ -20,12 +20,13 @@ export class SubjectMarksComponent implements OnInit {
   public studentList: any;
   public showStudentList: boolean=false;
   public Save: string = "Save";
+  public URL:string="http://localhost:8089/"
   constructor(private http: HttpClient, private userNameService: UsernameService,) { }
 
   ngOnInit(): void {
     this.username = this.userNameService.getUserName()
     this.http
-      .get("http://localhost:8089/Teacher/"+this.username)
+      .get(this.URL+"Teacher/"+this.username)
       .subscribe(response=> {
         this.EnrolledSubjects = JSON.parse(JSON.stringify(response));
          this.subjectList = this.EnrolledSubjects.subjects
@@ -38,17 +39,15 @@ export class SubjectMarksComponent implements OnInit {
     this.showSubjectList = false
     this.showStudentList=true
     this.http
-      .get("http://localhost:8089/Subject/SubjectMarks/"+subjectId)
+      .get(this.URL+"Subject/SubjectMarks/"+subjectId)
       .subscribe(response=> {
-        this.CurrentSubject = JSON.parse(JSON.stringify(response));
-this.studentList=JSON.parse(JSON.stringify(response))?.students;
-      })
+this.studentList=JSON.parse(JSON.stringify(response)  )    })
   }
 
   submitMarks(Marks:NgForm){
     this.Save = "Saved!"
     let MarksParse=JSON.parse(JSON.stringify(Marks.value))
-    this.http.post('http://localhost:8089/Subject/MarksSubmit/'+this.subjectId,JSON.stringify(MarksParse))
+    this.http.post(this.URL+"Subject/MarksSubmit/"+this.subjectId,JSON.stringify(MarksParse))
       .subscribe((result) => {
 
       })

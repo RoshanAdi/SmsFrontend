@@ -34,6 +34,7 @@ export class AuthInterceptor implements HttpInterceptor {
 
       return throwError(error);
     }));
+
   }
 
   private handle401Error(request: HttpRequest<any>, next: HttpHandler) {
@@ -53,6 +54,7 @@ export class AuthInterceptor implements HttpInterceptor {
 
 
   }
+
 }
 
 export const authInterceptorProviders = [

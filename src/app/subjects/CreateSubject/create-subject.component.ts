@@ -11,6 +11,7 @@ const USER_KEY = 'auth-user';
   styleUrls: ['./create-subject.component.css']
 })
 export class CreateSubjectComponent implements OnInit {
+  public URL:string="http://localhost:8089/"
   currentUser: any;
   public username:any;
   CurrentNameObj:any
@@ -23,7 +24,7 @@ export class CreateSubjectComponent implements OnInit {
     this.username = this.userNameService.getUserName()
     console.error(this.username)
     this.http
-      .get("http://localhost:8089/Teacher/"+this.username)
+      .get(this.URL+"Teacher/"+this.username)
       .subscribe(response=> {
         this.currentName = JSON.stringify(response);
         this.CurrentNameObj = JSON.parse(this.currentName);
@@ -32,7 +33,7 @@ export class CreateSubjectComponent implements OnInit {
   }
   Submit(CreateSub: NgForm) {
     console.log(CreateSub)                                            /// delete
-    this.http.post('http://localhost:8089/Subject/Create', CreateSub)
+    this.http.post(this.URL+'Subject/Create', CreateSub)
       .subscribe((result) => {
         console.warn("result", result)                ////remove
       })

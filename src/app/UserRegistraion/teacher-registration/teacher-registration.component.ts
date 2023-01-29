@@ -9,7 +9,7 @@ import {Router} from "@angular/router";
   styleUrls: ['./teacher-registration.component.css']
 })
 export class TeacherRegistrationComponent implements OnInit {
-
+  public URL:string="http://localhost:8089/"
   StudentAge: string | undefined
   status: boolean | undefined;
 
@@ -39,7 +39,7 @@ export class TeacherRegistrationComponent implements OnInit {
 
   Submit(TeacherRegData: NgForm) {
     console.log(TeacherRegData)                                            /// delete
-    this.http.post('http://localhost:8089/teacher/register', TeacherRegData)
+    this.http.post(this.URL+'teacher/register', TeacherRegData)
       .subscribe((result) => {
         console.warn("result", result)                ////remove
       })

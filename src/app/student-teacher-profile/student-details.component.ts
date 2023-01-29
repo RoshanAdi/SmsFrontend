@@ -8,6 +8,7 @@ import {Router} from "@angular/router";
 import {NgForm} from "@angular/forms";
 import {TokenStorageService} from "../JwtTokenSetup/_services/token-storage.service";
 import jwt_decode from "jwt-decode";
+import {ReportComponent} from "../report/report.component";
 const USER_KEY = 'auth-user';
 
 @Component({
@@ -19,7 +20,7 @@ export class StudentDetailsComponent implements OnInit {
   public marks: any;
 
 
-constructor( private tokenStorage: TokenStorageService,private http:HttpClient,private userNameService: UsernameService, ){}
+constructor(private tokenStorage: TokenStorageService,private http:HttpClient,private userNameService: UsernameService, ){}
   myObj:any
 userDetails:any
   subjects:any
@@ -39,7 +40,7 @@ public StudentUser = false
   public TeacherUser = false
   currentUser: any;
 public marksString:any
-
+  public URL:string="http://localhost:8089/"
 
   ngOnInit(): void { console.log("printing the username found from token = "+this.userNameService.getUserName())
     const user = window.sessionStorage.getItem(USER_KEY);
@@ -47,9 +48,10 @@ public marksString:any
     let Role = String(this.currentUser.roles)
         console.warn("role found on token = "+Role.slice(5, ))
 
+
     const username = this.userNameService.getUserName()
     this.http
-      .get("http://localhost:8089/"+Role.slice(5, )+"/"+username)
+      .get(this.URL+Role.slice(5, )+"/"+username)
       .subscribe(response=> {
               this.userDetails = JSON.stringify(response);
         console.error(JSON.stringify(response))
@@ -87,7 +89,7 @@ if (Role.slice(5, )=='Student'){
     const user = window.sessionStorage.getItem(USER_KEY);
     this.currentUser = jwt_decode(String(user));
     let Role = String(this.currentUser.roles)
-    this.http.put('http://localhost:8089/'+Role.slice(5, )+'/'+this.username, UpdateData)
+    this.http.put(this.URL+Role.slice(5, )+'/'+this.username, UpdateData)
 
   .subscribe((result) => {
     console.warn("result", result)                ////remove

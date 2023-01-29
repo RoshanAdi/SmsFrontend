@@ -8,6 +8,7 @@ import {HttpClient} from "@angular/common/http";
   styleUrls: ['./mcq.component.css']
 })
 export class McqComponent implements OnInit {
+  public URL:string="http://localhost:8089/"
   public Assignment4Mcq:any;
   public assignment4Mcq:any;
   public showMcqCreate:boolean = false;
@@ -26,7 +27,7 @@ export class McqComponent implements OnInit {
 
   ngOnInit(): void {
     this.http
-      .get("http://localhost:8089/Assignment/"+localStorage.getItem("AssiId"))
+      .get(this.URL+"Assignment/"+localStorage.getItem("AssiId"))
       .subscribe(response=> {
         this.Assignment4Mcq = JSON.stringify(response);
         this.assignment4Mcq = JSON.parse(this.Assignment4Mcq);
@@ -43,7 +44,7 @@ export class McqComponent implements OnInit {
 
   submitMcq(value: NgForm): void {
     if(JSON.parse(JSON.stringify(value.value)).question.length>>2&&JSON.parse(JSON.stringify(value.value)).choice1.length>>0){
-    this.http.post('http://localhost:8089/Mcq/create/'+localStorage.getItem("AssiId"), value.value)
+    this.http.post(this.URL+'Mcq/create/'+localStorage.getItem("AssiId"), value.value)
       .subscribe((result) => {
         console.warn("result", result)                ////remove
       })
@@ -70,7 +71,7 @@ export class McqComponent implements OnInit {
   }
   saveMcqLoad(){
     this.http
-      .get("http://localhost:8089/Assignment/"+localStorage.getItem("AssiId"))
+      .get(this.URL+"Assignment/"+localStorage.getItem("AssiId"))
       .subscribe(response=> {
         this.Assignment4Mcq = JSON.stringify(response);
         this.assignment4Mcq = JSON.parse(this.Assignment4Mcq);
@@ -83,7 +84,7 @@ export class McqComponent implements OnInit {
     return this.mcqList;
   }
   DeleteMcq(id:number){
-    this.http.delete('http://localhost:8089/Mcq/delete/'+id)
+    this.http.delete(this.URL+'Mcq/delete/'+id)
       .subscribe((result) => {
         console.warn("result", result)
       })

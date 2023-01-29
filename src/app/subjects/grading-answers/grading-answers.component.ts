@@ -11,6 +11,7 @@ import {ThisReceiver} from "@angular/compiler";
   styleUrls: ['./grading-answers.component.css']
 })
 export class GradingAnswersComponent implements OnInit {
+  public URL:string="http://localhost:8089/"
   public CurrentSubject : any;
   public subjectList : any;
   public showSubjectList: boolean = true;
@@ -40,7 +41,7 @@ public showUpdateButton:boolean =false
     this.username = this.userNameService.getUserName()
 
     this.http
-      .get("http://localhost:8089/Teacher/"+this.username)
+      .get(this.URL+"Teacher/"+this.username)
       .subscribe(response=> {
         this.CurrentTeacher = JSON.parse(JSON.stringify(response));
         this.firstName = this.CurrentTeacher.firstName
@@ -55,7 +56,7 @@ public showUpdateButton:boolean =false
   }
   loadSubject(id: any){
     this.http
-      .get("http://localhost:8089/Subject/"+id)
+      .get(this.URL+"Subject/"+id)
       .subscribe(response=> {
         this.CurrentSubject = JSON.parse(JSON.stringify(response));
       })
@@ -70,7 +71,7 @@ public stringfyassiment:any
   ShowSubmissions(assigmentID:number){
 
     this.http
-      .get("http://localhost:8089/Assignment/"+assigmentID)
+      .get(this.URL+"Assignment/"+assigmentID)
       .subscribe(response=> {
         this.Assignment = JSON.parse(JSON.stringify(response));
 
@@ -86,7 +87,7 @@ public stringfyassiment:any
 
 
     this.http
-      .get("http://localhost:8089/EssayAnswers/"+assigmentID)
+      .get(this.URL+"EssayAnswers/"+assigmentID)
       .subscribe(response=> {
         this.EssayAnswers = JSON.parse(JSON.stringify(response));
         this.shortAnswerList =  JSON.parse(JSON.stringify(response));
@@ -119,7 +120,7 @@ public stringfyassiment:any
   submitMarks(Marks:NgForm){
     this.showUpdateButton=true
     this.Save="Update"
-    this.http.post('http://localhost:8089/marks/EssayQuestions/'+this.marks,Marks.value)
+    this.http.post(this.URL+'marks/EssayQuestions/'+this.marks,Marks.value)
       .subscribe((result) => {
 
       })
@@ -163,7 +164,7 @@ var counter = 0
 
   downloadProvidedFiles(id: string, fileName: string, fileType: string) {
     this.http
-      .get<Blob>("http://localhost:8089/files/download/" + id, {responseType: 'blob' as 'json'})
+      .get<Blob>(this.URL+"files/download/" + id, {responseType: 'blob' as 'json'})
       .subscribe((data) => {
 
         this.blob = new Blob([data], {type: fileType});
@@ -180,7 +181,7 @@ var counter = 0
 
   submitFileMarks(marks:NgForm){
     this.showUpdateButton=true
-    this.http.post('http://localhost:8089/marks/File/100',marks.value)
+    this.http.post(this.URL+'marks/File/100',marks.value)
       .subscribe((result) => {
 
       })

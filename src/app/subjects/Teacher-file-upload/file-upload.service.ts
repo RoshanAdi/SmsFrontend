@@ -7,6 +7,7 @@ import {SubjectsComponent} from "../subjects.component";
   providedIn: 'root'
 })
 export class FileUploadService {
+  public URL:string="http://localhost:8089/"
   public fileDBList: any[] = []
   public savedFiles: any[] = []
   public blob: any
@@ -20,7 +21,7 @@ export class FileUploadService {
 
     formData.append('file', file);
 
-    const req = new HttpRequest('POST', "http://localhost:8089/files/upload/" + localStorage.getItem("AssiId"), formData, {
+    const req = new HttpRequest('POST', this.URL+"files/upload/" + localStorage.getItem("AssiId"), formData, {
 
       reportProgress: true,
       responseType: 'json'

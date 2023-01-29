@@ -11,11 +11,11 @@ import {NgChartsConfiguration, NgChartsModule} from "ng2-charts";
 @NgModule({
   declarations: [ AppComponent ],
   imports: [BrowserModule, AppRoutingModule,HttpClientModule,NgChartsModule],
-  providers: [{                    //authInterceptorProviders removed
+  providers: [{
     provide: HTTP_INTERCEPTORS,
     useClass: AuthInterceptor,
     multi: true,
-  },{ provide: NgChartsConfiguration, useValue: { generateColors: false }}],
+  },{ provide: NgChartsConfiguration, useValue: { generateColors: false }},],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

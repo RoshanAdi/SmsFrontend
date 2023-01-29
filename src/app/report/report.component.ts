@@ -17,6 +17,7 @@ export class ReportComponent implements OnInit {
   public CurrentReport:any
   public Data1:any[]=[]
   public MarksList: any;
+  public URL:string="http://localhost:8089/"
    constructor(private http:HttpClient,) {
     Chart.register(Annotation)
   }
@@ -27,7 +28,7 @@ export class ReportComponent implements OnInit {
 
   ngOnInit(): void {
     this.http
-      .get("http://localhost:8089/Report")
+      .get(this.URL+"Report")
       .subscribe(response=> {
         this.reportList = JSON.parse(JSON.stringify(response));})
   }

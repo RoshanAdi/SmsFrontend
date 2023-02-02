@@ -51,6 +51,6 @@ Rank and average calculation
 
 Chart of marks distribution
 
-Back end - Angular 
+Back end - Spring boot
 
 Repository - https://github.com/RoshanAdi/SmsBackEnd
